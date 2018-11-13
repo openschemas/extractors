@@ -7,6 +7,12 @@ with [schemaorg](https://openschemas.github.io/schemaorg/#Usage) Python
 to help you to extract metadata from your datasets,
 software and other entities described in [schema.org](https://www.schema.org).
 
+## Examples
+
+ - [extract-dockerfile Writeup](https://vsoch.github.io/2018/schemaorg/) to demonstrate extraction for a Dockerfile.
+ - [extract-dockerfile Repository](https://github.com/openbases/extract-dockerfile)
+ - [dockerfiles](https://github.com/openschemas/dockerfiles) A scaled extraction (under development) for ~30-60K Dockerfiles, a subset of the [Dinosaur Dataset](https://vsoch.github.io/datasets/2018/dockerfiles/).
+
 ## Specifications
 
 We have the following examples for production and development entities (children of "Thing")
@@ -15,14 +21,16 @@ developed, please [open an issue](https://www.github.com/openschemas/extracters/
 
 ### Production
 
- - [Dataset](Dataset) an example extraction is coming shortly.
+ - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [DataCatalog](DataCatalog): a collection or grouping of Datasets, with an [example here](https://openschemas.github.io/dockerfiles)
  - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
 
 ### Development
 
- - [ContainerRecipe](ContainerRecipe) example extraction shown [here](https://openbases.github.io/extract-dockerfile/ContainerRecipe/).
- - [ImageDefinition](ImageDefinition) example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
+**coming soon** [waiting on PRs](https://github.com/openschemas/schemaorg/issues/8) for container-diff. The extraction scripts are ready to go and can be viewed [here](https://github.com/openschemas/dockerfiles)
+
+ - [ContainerRecipe]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ContainerRecipe/).
+ - [ImageDefinition]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
 
 
 ## What is special about those pages?

@@ -15,14 +15,14 @@ developed, please [open an issue](https://www.github.com/openschemas/extracters/
 
 ### Production
 
- - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
- - [DataCatalog](DataCatalog): a collection or grouping of Datasets, with an [example here](https://openschemas.github.io/dockerfiles)
  - [Dataset](Dataset) an example extraction is coming shortly.
+ - [DataCatalog](DataCatalog): a collection or grouping of Datasets, with an [example here](https://openschemas.github.io/dockerfiles)
+ - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
 
 ### Development
 
- - [ImageDefinition](ImageDefinition) example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
  - [ContainerRecipe](ContainerRecipe) example extraction shown [here](https://openbases.github.io/extract-dockerfile/ContainerRecipe/).
+ - [ImageDefinition](ImageDefinition) example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
 
 
 ## What is special about those pages?

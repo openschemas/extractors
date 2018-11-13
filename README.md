@@ -77,14 +77,7 @@ I can learn that the "SoftwareSourceCode" definition has 121 properties,
 but the recipe tells us that we only need a subset of those
 properties for a valid extraction.
 
-### specification.yml
-
-The specification.yml file is only provided in the [ContainerRecipe](ContainerRecipe)
-folder because this isn't a production specification provided by schema.org. For
-those that are published (e.g., SoftwareSourceCode and Dataset) the definitions are
-provided in the python module.
-
-### extractor.py
+### extract.py
 
 This is the code snippet that shows how you extract metadata and use the 
 [schemaorg](https://www.github.com/openschemas/schemaorg) Python module
@@ -94,6 +87,7 @@ to generate the final template page. This file could be run in multiple places!
  - Using a tool like [datalad](https://datalad.org) that allows for version control of such metadata, and definition of extractors (also in Python).
  - As a Github hook (or action) that is run at any stage in the development process.
  - Rendered by a web server that provides Container Recipes for users that should be indexed with Google Search (e.g., Singularity Hub).
+
 
 ## Resources
 

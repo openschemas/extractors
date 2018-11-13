@@ -1,22 +1,27 @@
 #!/usr/bin/env python
 
 '''
-This function will demonstrate how we can generate a DataCatalog
-Author: @vsoch
-November 13, 2018
+This script will provide a function for extracting information from for
+some SoftwareSourceCode. You can optionally provide a Person to the function.
 
-    Thing > DataCatalog
+Author: @vsoch
+October 21, 2018
+
+    Thing > CreativeWork > SoftwareSourceCode
 
 '''
+
 
 from schemaorg.templates.google import make_dataset
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 import os
 
+def extract(name, description, thumbnail, sameAs, version=None,
+            about=None, output_file=None, person=None, repository=None,
+            runtime=None,
+            **kwargs):
 
-def extract(name, url, description,
-            about=None, thumbnail=None, output_file=None, **kwargs):
     ''' extract a DataCatalog to describe some dataset(s). To add more
         properties, just add them via additional keyword args (kwargs)
     
@@ -28,34 +33,39 @@ def extract(name, url, description,
         description: a description of the DataCatalog
         thumbnail: an image thumbnail (web url)
         about: text about the data catalog (optional).
+        version: the software version. If not provided, uses schemarg version
     '''
 
     # Step 0. Define absolute paths to our Dockerfile, recipe, output
     here = os.path.abspath(os.path.dirname(__file__))
     recipe_yml = os.path.join(here, "recipe.yml")
     
-    # Step 3: Create Data Catalog
-    catalog = Schema("DataCatalog")
-
     # Step 1: Show required and recommended fields from recipe
     recipe = RecipeParser(recipe_yml)
     
-    # datacatalog.properties
-    catalog.add_property('url', about)
-    catalog.add_property('name', name)
-    catalog.add_property('description', description)
-    catalog.add_property('thumbnailUrl', thumbnail)    
-    catalog.add_property('about', about)
+    # Step 2: Create SoftwareSourceCode
+    ssc = Schema("SoftwareSourceCode")
 
-    # Additional (won't be added if not part of schema)
+    # dataset.properties
+    ssc.add_property('creator', person)
+    ssc.add_property('version', version or ssc.version)
+    ssc.add_property('description', description)
+    ssc.add_property('name', name)
+    ssc.add_property('thumbnailUrl', thumbnail)
+    ssc.add_property('sameAs', sameAs)
+    ssc.add_property('about', about)
+    ssc.add_property('codeRepository', repository)
+    ssc.add_property('runtime', runtime)
+
+    # Step 3: Additional (won't be added if not part of schema)
     for key,value in kwargs.items():
-        catalog.add_property(key, value)
+        ssc.add_property(key, value)
 
     # Step 4: Validate Data Structure
-    recipe.validate(catalog)
+    recipe.validate(ssc)
 
     # Step 5: If the user wants to write to html, do it before return
     if output_file is not None:
-        make_dataset(catalog, output_file)
+        make_dataset(ssc, output_file)
 
-    return catalog
+    return ssc

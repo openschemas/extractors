@@ -16,7 +16,6 @@ November 11, 2018
 from schemaorg.templates.google import make_dataset
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
-from spython.main.parse import DockerRecipe
 import os
 
 
@@ -24,17 +23,17 @@ def extract(name, description, version, thumbnail, sameAs,
             about=None, output_file=None, person=None, catalog=None,
             **kwargs):
 
-    '''extract a DataCatalog to describe some dataset(s). To add more
-       properties, just add them via additional keyword args (kwargs)
+    ''' extract a DataCatalog to describe some dataset(s). To add more
+        properties, just add them via additional keyword args (kwargs)
     
-       Parameters
-       ==========
-       output_file: An html output file to write catalog to (optional)
-       url: the url to get the catalog
-       name: the name of the DataCatalog
-       description: a description of the DataCatalog
-       thumbnail: an image thumbnail (web url)
-       about: text about the data catalog (optional).
+        Parameters
+        ==========
+        output_file: An html output file to write catalog to (optional)
+        url: the url to get the catalog
+        name: the name of the DataCatalog
+        description: a description of the DataCatalog
+        thumbnail: an image thumbnail (web url)
+        about: text about the data catalog (optional).
     '''
 
     # Step 0. Define absolute paths to our Dockerfile, recipe, output
@@ -44,7 +43,7 @@ def extract(name, description, version, thumbnail, sameAs,
     # Step 1: Show required and recommended fields from recipe
     recipe = RecipeParser(recipe_yml)
    
-    # Step 3: Create Dataset
+    # Step 2: Create Dataset
     dataset = Schema("Dataset")
 
     # dataset.properties
@@ -56,7 +55,7 @@ def extract(name, description, version, thumbnail, sameAs,
     dataset.add_property('sameAs', sameAs)
     dataset.add_property('about', about)
 
-    # Additional (won't be added if not part of schema)
+    # Step 3: Additional (won't be added if not part of schema)
     for key,value in kwargs.items():
         dataset.add_property(key, value)
 

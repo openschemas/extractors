@@ -1,0 +1,29 @@
+# Specification base using to http://www.schema.org
+# Using Version 3.4
+# Found http://www.schema.org/DataCatalog
+# This is the simple listing of requirements for schemaorg python to 
+# read and for the user to provide to create a DataCatalog entry
+
+## A Dataset
+# Thing > DataCatalog
+
+# Attributes not listed are accepted, but not required or recommended. If an
+# attribute is not included officially with a specification release it will
+# be ignored.
+
+# Without a key:pair implies the key is equal to the value, e.g., "license"
+# in schema.org gets mapped to "license" for the Google dataset
+#  - license
+
+################################################################################
+# Shared Attributes
+################################################################################
+
+version: 1
+schemas:
+  DataCatalog:
+    recommended:
+      - url
+      - description
+      - name
+      - about

@@ -1,0 +1,34 @@
+# Specification base using to http://www.schema.org
+# Using Version 3.4
+# Found http://www.schema.org/Organization
+# This is the simple listing of requirements for schemaorg python to 
+# read and for the user to provide to create an Organization
+
+## A Dataset
+# Thing > Organization
+
+# Attributes not listed are accepted, but not required or recommended. If an
+# attribute is not included officially with a specification release it will
+# be ignored.
+
+# Without a key:pair implies the key is equal to the value, e.g., "license"
+# in schema.org gets mapped to "license" for the Google dataset
+#  - license
+
+################################################################################
+# Shared Attributes
+################################################################################
+
+version: 1
+schemas:
+  Organization:
+    required:
+      - url
+      - name
+      - contactPoint
+  ContactPoint:
+    required:
+      - contactType
+    recommended:
+      - telephone
+      - email

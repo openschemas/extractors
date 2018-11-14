@@ -23,6 +23,7 @@ developed, please [open an issue](https://www.github.com/openschemas/extracters/
 
  - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [DataCatalog](DataCatalog): a collection or grouping of Datasets
+ - [Organization](Organization): a complete organization, with a ContactPoint
  - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
 
 ### Development

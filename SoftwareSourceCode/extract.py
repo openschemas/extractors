@@ -17,12 +17,11 @@ from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 import os
 
-def extract(name, description, thumbnail, sameAs, version=None,
+def extract(name, description, thumbnail=None, sameAs=None, version=None,
             about=None, output_file=None, person=None, repository=None,
-            runtime=None,
-            **kwargs):
+            runtime=None, **kwargs):
 
-    ''' extract a DataCatalog to describe some dataset(s). To add more
+    ''' extract a SoftwareSourceCode to describe a codebase. To add more
         properties, just add them via additional keyword args (kwargs)
     
         Parameters

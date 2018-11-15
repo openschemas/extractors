@@ -16,8 +16,9 @@ from schemaorg.main import Schema
 import os
 
 
-def extract(name, url, contact_type, telephone,
-            email, output_file=None, **kwargs):
+def extract(name, url, telephone,
+            email, output_file=None, contact_type="customer_service", 
+            **kwargs):
     ''' extract an Organization. Some of the fields required are for
         a "ContactPoint" included within.
  
@@ -37,7 +38,7 @@ def extract(name, url, contact_type, telephone,
 
     # Step 2: Create Contact Point    
     contact = Schema("ContactPoint")
-    contact.add_property('ContactType', contact_type)
+    contact.add_property('contactType', contact_type)
     contact.add_property('telephone', telephone)
     contact.add_property('email', email)
 

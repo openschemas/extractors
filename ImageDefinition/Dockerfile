@@ -1,6 +1,7 @@
 FROM golang:1.11.3-stretch
 
-# docker build -t openschemas/extractors-imagedefinition .
+# From the repository root, run
+# docker build -f ImageDefinition/Dockerfile -t openschemas/extractors-imagedefinition .
 
 ################################################################################
 #
@@ -56,6 +57,8 @@ RUN go get github.com/GoogleContainerTools/container-diff && \
 # Add local files
 ADD . /code
 
+WORKDIR /code/ImageDefinition
+
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python3 get-pip.py && \
     pip install --upgrade pip && \
@@ -66,5 +69,4 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
     mkdir -p /root/.docker && \
     echo {} > /root/.docker/config.json
 
-WORKDIR /code
-ENTRYPOINT ["/bin/bash", "/code/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/code/ImageDefinition/entrypoint.sh"]

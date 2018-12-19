@@ -11,7 +11,7 @@ usage () {
 
                 help: show help and exit
                 extract: extract a json-ld or html page for a specific schema.org
-                         data type, from a Dockerfile
+                         data type (ImageDefinition), from a Dockerfile
          
          Options [extract]:
 
@@ -25,9 +25,9 @@ usage () {
 
          Examples:
 
-              docker run <container> extract ImageDefinition
-              docker run <container> extract ImageDefinition --html
-              docker run <container> extract ImageDefinition -f /path/to/Dockerfile
+              docker run <container> extract --contact vsoch
+              docker run <container> extract --contact vsoch --html
+              docker run <container> extract --contact vsoch -f /path/to/Dockerfile
 
          "
 }
@@ -92,8 +92,6 @@ if [ -z "${GITHUB_TOKEN}" ]; then
     DEPLOY="no"
 fi
 
-EXTRACTION_TYPE=${1:-Dataset}
-
 if [ -z "${MAINTAINER}" ]; then
     echo "Please provide a --contact for the contact."
     exit 1;
@@ -106,13 +104,6 @@ if [ "${EXTRACTION}" == "yes" ]; then
     # Does the Dockerfile exist?
     if [ ! -f "${DOCKERFILE}" ]; then
         echo "${DOCKERFILE} does not exist.";
-        exit 1;
-    fi
-
-
-    # If the folder doesn't exist, not a valid extraction type
-    if [ ! -d "${EXTRACTION_TYPE}" ]; then
-        echo "${EXTRACTION_TYPE} is not a valid extraction type.";
         exit 1;
     fi
 

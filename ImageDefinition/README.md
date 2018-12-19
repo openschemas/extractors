@@ -100,4 +100,19 @@ variables:
 | GITHUB_ACTOR | Your Github username (provided by Github, you don't need to set) |
 | GITHUB_REPO | The repository (again, provided by Github) |
 
+Full (tested and working) example coming soon!
 
+## Development
+
+If you want to build the image locally, we follow the Docker Hub context rules
+and the Dockerfile expects to be built from the [root of the repository](../).
+This would then look like this:
+
+```bash
+$ docker build -f ImageDefinition/Dockerfile -t openschemas/extractors:ImageDefinition .
+```
+and if you want to push (because Docker Hub is slow sometimes)
+
+```bash
+$ docker push openschemas/extractors:ImageDefinition
+```

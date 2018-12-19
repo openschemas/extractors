@@ -43,7 +43,14 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV MESSAGELEVEL QUIET
 
-LABEL Maintainer vsochat@stanford.edu
+LABEL "com.github.actions.name"="ImageDefinition Extractor"
+LABEL "com.github.actions.description"="Extract schema.org ImageDefinition for Dockerfile"
+LABEL "com.github.actions.icon"="cloud"
+LABEL "com.github.actions.color"="blue"
+
+LABEL "repository"="https://www.github.com/openschemas/extractors"
+LABEL "homepage"="https://www.github.com/openschemas/extractors"
+LABEL "maintainer"="Vanessa Sochat <vsochat@stanford.edu>"
 
 # Install container-diff from master
 RUN go get github.com/GoogleContainerTools/container-diff && \

@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Schema.org Metadata Json</title>
+<style>
+body {
+	background: #e16a3f;
+}
+
+.code-editor:before,
+.code-editor:after,
+.code-editor span.control:before,
+.code-editor span.after:after {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	content: '';
+	position: absolute;
+	z-index: 1;
+	-webkit-transition: all .5s ease-in-out;
+    -moz-transition: wall .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+.code-editor {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin: 40px auto 0 auto;
+   	width: 750px; 
+   	text-align: left;
+   	background-color: #473431;
+   	border-radius: 0 0 5px 5px;
+   	overflow: auto;
+   	-webkit-transition: all .5s ease-in-out;
+    -moz-transition: wall .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+.code-editor:before {
+	content: 'Schema.org Metadata';
+	font-family: 'Consolas';
+	color: #222;
+	padding-top: 6px; 
+	text-align: center;
+	top: 25px;
+	width: 750px;
+	height: 30px;
+	background-color: #fafafa;
+	border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	-o-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+}
+
+.code-editor span.control:before {
+	content: '';
+	top: 34px;
+	z-index: 2;
+	padding: 6px;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-o-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
+.code-editor span.control:nth-child(1):before {
+	margin-left: 15px;
+	background-color: #df6963;
+	
+}
+
+.code-editor span.control:nth-child(2):before {
+	margin-left: 35px;
+	background-color: #f5e18a;
+	
+}
+
+.code-editor span.control:nth-child(3):before {
+	margin-left: 55px;
+	background-color: #97c38a;
+}
+
+/* -- iPad Screen -- */
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+	.code-editor {
+   		width: 500px; 
+	}
+
+	.code-editor:before {
+		width: 500px;
+	}
+}
+
+/* -- iPhone Screen -- */
+@media only screen and (max-width: 479px) {
+	.code-editor {
+		width: 300px;
+	}	
+
+	.code-editor:before {
+		width: 300px;
+	}
+}
+
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #ccc;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: 0em 0;
+  height: 500px;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #473431;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  -moz-border-radius: .3em;
+  -o-border-radius: .3em;
+  -webkit-border-radius: .3em;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #999;
+}
+
+.token.punctuation {
+  color: #ccc;
+}
+
+
+.token.tag,
+.token.attr-name,
+.token.namespace {
+  color: #e2777a;
+}
+
+.token.function-name {
+  color: #6196cc;
+}
+
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #cc99cd;
+}
+
+.token.string,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url
+{
+  color: #67cdcc;
+}
+
+
+.token.important {
+  font-weight: bold;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre.line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+	padding-bottom: 1px;
+}
+
+pre.line-numbers > code {
+	position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+
+	font-size: 100%;
+	left: -13em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	background-color: #322422;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+.line-numbers-rows > span {
+	pointer-events: none;
+	display: block;
+	counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+	content: counter(linenumber);
+	color: #999;
+	display: block;
+	padding-right: 0.8em;
+	text-align: right;
+}
+</style>
+</head>
+
+<body>
+<div class="code-editor">	
+    <span class="control"></span>
+    <span class="control"></span>
+    <span class="control"></span>
+    <pre class="line-numbers">
+    <code class="language-json">
+{
+    "environment": [
+        "PYTHONUNBUFFERED=1"
+    ],
+    "description": "A Dockerfile build recipe",
+    "name": "vanessa/sregistry",
+    "ContainerImage": "python:3.5.1",
+    "operatingSystem": "linux",
+    "softwareVersion": "sha256:f2a4c6877194f875708c62542eaf728660bc04d520163f8b2943d35669540bf7",
+    "identifier": [
+        "vanessa/sregistry:latest"
+    ],
+    "url": "https://hub.docker.com/r/vanessa/sregistry",
+    "alternateName": "Singularity Registry",
+    "softwareHelp": "https://singularityhub.github.io/sregistry",
+    "citation": "http://joss.theoj.org/papers/050362b7e7691d2a5d0ebed8251bc01e",
+    "license": "https://github.com/singularityhub/sregistry/blob/master/LICENSE",
+    "keywords": "container, containers, singularity, singularity registry",
+    "softwareRequirements": [
+        "Apt > acl==2.2.52-2",
+        "Apt > adduser==3.113 nmu3",
+        "Apt > anacron==2.3-23",
+        "Apt > apt==1.0.9.8.3",
+        "Apt > autoconf==2.69-8",
+        "Apt > automake==1:1.14.1-4 deb8u1",
+        "Apt > autotools-dev==20140911.1",
+        "Apt > base-files==8 deb8u4",
+        "Apt > base-passwd==3.5.37",
+        "Apt > bash==4.3-11 b1",
+        "Apt > binutils==2.25-5",
+        "Apt > bsd-mailx==8.1.2-0.20141216cvs-2",
+        "Apt > bsdutils==1:2.25.2-6",
+        "Apt > build-essential==11.7",
+        "Apt > bzip2==1.0.6-7 b3",
+        "Apt > ca-certificates==20141019 deb8u1",
+        "Apt > cmake==3.0.2-1 deb8u1",
+        "Apt > cmake-data==3.0.2-1 deb8u1",
+        "Apt > comerr-dev==2.1-1.42.12-1.1",
+        "Apt > coreutils==8.23-4",
+        "Apt > cpp==4:4.9.2-2",
+        "Apt > cpp-4.9==4.9.2-10 deb8u1",
+        "Apt > cron==3.0pl1-127 deb8u1",
+        "Apt > curl==7.38.0-4 deb8u3",
+        "Apt > dash==0.5.7-4 b1",
+        "Apt > debconf==1.5.56",
+        "Apt > debconf-i18n==1.5.56",
+        "Apt > debian-archive-keyring==2014.3",
+        "Apt > debianutils==4.4 b1",
+        "Apt > diffutils==1:3.3-1 b1",
+        "Apt > dmsetup==2:1.02.90-2.2",
+        "Apt > dpkg==1.17.26",
+        "Apt > dpkg-dev==1.17.27",
+        "Apt > e2fslibs==1.42.12-1.1",
+        "Apt > e2fsprogs==1.42.12-1.1",
+        "Apt > exim4==4.84.2-2 deb8u5",
+        "Apt > exim4-base==4.84.2-2 deb8u5",
+        "Apt > exim4-config==4.84.2-2 deb8u5",
+        "Apt > exim4-daemon-light==4.84.2-2 deb8u5",
+        "Apt > fakeroot==1.20.2-1",
+        "Apt > file==1:5.22 15-2+deb8u1",
+        "Apt > findutils==4.4.2-9 b1",
+        "Apt > fontconfig==2.11.0-6.3",
+        "Apt > fontconfig-config==2.11.0-6.3",
+        "Apt > fonts-dejavu-core==2.34-1",
+        "Apt > g++==4:4.9.2-2",
+        "Apt > g++-4.9==4.9.2-10 deb8u1",
+        "Apt > gcc==4:4.9.2-2",
+        "Apt > gcc-4.8-base==4.8.4-1",
+        "Apt > gcc-4.9==4.9.2-10 deb8u1",
+        "Apt > gcc-4.9-base==4.9.2-10 deb8u1",
+        "Apt > geoip-bin==1.6.2-4",
+        "Apt > git==1:2.1.4-2.1 deb8u7",
+        "Apt > git-man==1:2.1.4-2.1 deb8u2",
+        "Apt > gnupg==1.4.18-7 deb8u1",
+        "Apt > gpgv==1.4.18-7 deb8u1",
+        "Apt > grep==2.20-4.1",
+        "Apt > gzip==1.6-4",
+        "Apt > hdf5-helpers==1.8.13 docs-15+deb8u1",
+        "Apt > hicolor-icon-theme==0.13-1",
+        "Apt > hostname==3.15",
+        "Apt > imagemagick==8:6.8.9.9-5 deb8u3",
+        "Apt > imagemagick-6.q16==8:6.8.9.9-5 deb8u3",
+        "Apt > imagemagick-common==8:6.8.9.9-5 deb8u3",
+        "Apt > inetutils-ping==2:1.9.2.39.3a460-3",
+        "Apt > init==1.22",
+        "Apt > init-system-helpers==1.22",
+        "Apt > initscripts==2.88dsf-59",
+        "Apt > insserv==1.14.0-5",
+        "Apt > iproute2==3.16.0-2",
+        "Apt > krb5-multidev==1.12.1 dfsg-19+deb8u2",
+        "Apt > libacl1==2.2.52-2",
+        "Apt > libalgorithm-diff-perl==1.19.02-3",
+        "Apt > libalgorithm-diff-xs-perl==0.04-3 b1",
+        "Apt > libalgorithm-merge-perl==0.08-2",
+        "Apt > libapr1==1.5.1-3",
+        "Apt > libaprutil1==1.5.4-1",
+        "Apt > libapt-pkg4.12==1.0.9.8.3",
+        "Apt > libarchive-dev==3.1.2-11 deb8u3",
+        "Apt > libarchive13==3.1.2-11 deb8u3",
+        "Apt > libasan1==4.9.2-10 deb8u1",
+        "Apt > libatomic1==4.9.2-10 deb8u1",
+        "Apt > libattr1==1:2.4.47-2",
+        "Apt > libaudit-common==1:2.4-1",
+        "Apt > libaudit1==1:2.4-1 b1",
+        "Apt > libblas-common==1.2.20110419-10",
+        "Apt > libblas-dev==1.2.20110419-10",
+        "Apt > libblas3==1.2.20110419-10",
+        "Apt > libblkid1==2.25.2-6",
+        "Apt > libbsd0==0.7.0-2",
+        "Apt > libbz2-1.0==1.0.6-7 b3",
+        "Apt > libbz2-dev==1.0.6-7 b3",
+        "Apt > libc-bin==2.19-18 deb8u4",
+        "Apt > libc-dev-bin==2.19-18 deb8u4",
+        "Apt > libc6==2.19-18 deb8u4",
+        "Apt > libc6-dev==2.19-18 deb8u4",
+        "Apt > libcairo-gobject2==1.14.0-2.1 deb8u1",
+        "Apt > libcairo-script-interpreter2==1.14.0-2.1 deb8u1",
+        "Apt > libcairo2==1.14.0-2.1 deb8u1",
+        "Apt > libcap2==1:2.24-8",
+        "Apt > libcap2-bin==1:2.24-8",
+        "Apt > libcdt5==2.38.0-7",
+        "Apt > libcgraph6==2.38.0-7",
+        "Apt > libcilkrts5==4.9.2-10 deb8u1",
+        "Apt > libcloog-isl4==0.18.2-1 b2",
+        "Apt > libcomerr2==1.42.12-1.1",
+        "Apt > libcroco3==0.6.8-3 b1",
+        "Apt > libcryptsetup4==2:1.6.6-5",
+        "Apt > libcurl3==7.38.0-4 deb8u3",
+        "Apt > libcurl3-gnutls==7.38.0-4 deb8u3",
+        "Apt > libcurl4-openssl-dev==7.38.0-4 deb8u3",
+        "Apt > libdatrie1==0.2.8-1",
+        "Apt > libdb-dev==5.3.0 b1",
+        "Apt > libdb5.3==5.3.28-9",
+        "Apt > libdb5.3-dev==5.3.28-9",
+        "Apt > libdebconfclient0==0.192",
+        "Apt > libdevmapper1.02.1==2:1.02.90-2.2",
+        "Apt > libdjvulibre-text==3.5.25.4-4",
+        "Apt > libdjvulibre21==3.5.25.4-4 b1",
+        "Apt > libdpkg-perl==1.17.27",
+        "Apt > libedit2==3.1-20140620-2",
+        "Apt > libelfg0==0.8.13-5",
+        "Apt > liberror-perl==0.17-1.1",
+        "Apt > libestr0==0.1.9-1.1",
+        "Apt > libevent-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-core-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-dev==2.0.21-stable-2",
+        "Apt > libevent-extra-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-openssl-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-pthreads-2.0-5==2.0.21-stable-2",
+        "Apt > libexif12==0.6.21-2",
+        "Apt > libexpat1==2.1.0-6 deb8u3",
+        "Apt > libfakeroot==1.20.2-1",
+        "Apt > libffi-dev==3.1-2 b2",
+        "Apt > libffi6==3.1-2 b2",
+        "Apt > libfftw3-double3==3.3.4-2",
+        "Apt > libfile-fcntllock-perl==0.22-1 b1",
+        "Apt > libfontconfig1==2.11.0-6.3",
+        "Apt > libfreetype6==2.5.2-3 deb8u1",
+        "Apt > libgcc-4.9-dev==4.9.2-10 deb8u1",
+        "Apt > libgcc1==1:4.9.2-10 deb8u1",
+        "Apt > libgcrypt20==1.6.3-2 deb8u5",
+        "Apt > libgcrypt20-dev==1.6.3-2 deb8u5",
+        "Apt > libgd3==2.1.0-5 deb8u3",
+        "Apt > libgdbm3==1.8.3-13.1",
+        "Apt > libgdk-pixbuf2.0-0==2.31.1-2 deb8u5",
+        "Apt > libgdk-pixbuf2.0-common==2.31.1-2 deb8u5",
+        "Apt > libgeoip-dev==1.6.2-4",
+        "Apt > libgeoip1==1.6.2-4",
+        "Apt > libgeos-3.4.2==3.4.2-6",
+        "Apt > libgeos-c1==3.4.2-6",
+        "Apt > libgeos-dev==3.4.2-6",
+        "Apt > libgfortran3==4.9.2-10 deb8u1",
+        "Apt > libgirepository-1.0-1==1.42.0-2.2",
+        "Apt > libglib2.0-0==2.42.1-1 b1",
+        "Apt > libglib2.0-bin==2.42.1-1 b1",
+        "Apt > libglib2.0-data==2.42.1-1",
+        "Apt > libglib2.0-dev==2.42.1-1 b1",
+        "Apt > libgmp-dev==2:6.0.0 dfsg-6",
+        "Apt > libgmp10==2:6.0.0 dfsg-6",
+        "Apt > libgmpxx4ldbl==2:6.0.0 dfsg-6",
+        "Apt > libgnutls-deb0-28==3.3.8-6 deb8u7",
+        "Apt > libgnutls-openssl27==3.3.8-6 deb8u7",
+        "Apt > libgnutls28-dev==3.3.8-6 deb8u7",
+        "Apt > libgnutlsxx28==3.3.8-6 deb8u7",
+        "Apt > libgomp1==4.9.2-10 deb8u1",
+        "Apt > libgpg-error-dev==1.17-3",
+        "Apt > libgpg-error0==1.17-3",
+        "Apt > libgpm2==1.20.4-6.1 b2",
+        "Apt > libgraphite2-3==1.3.6-1~deb8u1",
+        "Apt > libgssapi-krb5-2==1.12.1 dfsg-19+deb8u2",
+        "Apt > libgssrpc4==1.12.1 dfsg-19+deb8u2",
+        "Apt > libgvc6==2.38.0-7",
+        "Apt > libgvpr2==2.38.0-7",
+        "Apt > libharfbuzz0b==0.9.35-2",
+        "Apt > libhdf5-8==1.8.13 docs-15+deb8u1",
+        "Apt > libhdf5-cpp-8==1.8.13 docs-15+deb8u1",
+        "Apt > libhdf5-dev==1.8.13 docs-15+deb8u1",
+        "Apt > libhogweed2==2.7.1-5 deb8u2",
+        "Apt > libice6==2:1.0.9-1 b1",
+        "Apt > libicu52==52.1-8 deb8u3",
+        "Apt > libidn11==1.29-1 deb8u1",
+        "Apt > libilmbase6==1.0.1-6.1",
+        "Apt > libisl10==0.12.2-2",
+        "Apt > libitm1==4.9.2-10 deb8u1",
+        "Apt > libjasper1==1.900.1-debian1-2.4 deb8u1",
+        "Apt > libjbig0==2.1-3.1",
+        "Apt > libjpeg-dev==1:1.3.1-12",
+        "Apt > libjpeg62-turbo==1:1.3.1-12",
+        "Apt > libjpeg62-turbo-dev==1:1.3.1-12",
+        "Apt > libjson-c2==0.11-4",
+        "Apt > libk5crypto3==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkadm5clnt-mit9==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkadm5srv-mit9==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkdb5-7==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkeyutils1==1.5.9-5 b1",
+        "Apt > libkmod2==18-3",
+        "Apt > libkrb5-3==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkrb5support0==1.12.1 dfsg-19+deb8u2",
+        "Apt > liblcms2-2==2.6-3 b3",
+        "Apt > libldap-2.4-2==2.4.40 dfsg-1+deb8u4",
+        "Apt > libldap2-dev==2.4.40 dfsg-1+deb8u4",
+        "Apt > liblocale-gettext-perl==1.05-8 b1",
+        "Apt > liblockfile-bin==1.09-6",
+        "Apt > liblockfile1==1.09-6",
+        "Apt > liblogging-stdlog0==1.0.4-1",
+        "Apt > liblognorm1==1.0.1-3",
+        "Apt > liblqr-1-0==0.4.2-2",
+        "Apt > liblsan0==4.9.2-10 deb8u1",
+        "Apt > libltdl-dev==2.4.2-1.11",
+        "Apt > libltdl7==2.4.2-1.11",
+        "Apt > liblzma-dev==5.1.1alpha 20120614-2+b3",
+        "Apt > liblzma5==5.1.1alpha 20120614-2+b3",
+        "Apt > liblzo2-2==2.08-1.2",
+        "Apt > libmagic1==1:5.22 15-2+deb8u1",
+        "Apt > libmagickcore-6.q16-2==8:6.8.9.9-5 deb8u3",
+        "Apt > libmagickcore-6.q16-2-extra==8:6.8.9.9-5 deb8u3",
+        "Apt > libmagickwand-6.q16-2==8:6.8.9.9-5 deb8u3",
+        "Apt > libmount1==2.25.2-6",
+        "Apt > libmpc3==1.0.2-1",
+        "Apt > libmpfr4==3.1.2-2",
+        "Apt > libmysqlclient-dev==5.5.49-0 deb8u1",
+        "Apt > libmysqlclient18==5.5.49-0 deb8u1",
+        "Apt > libncurses5==5.9 20140913-1+b1",
+        "Apt > libncurses5-dev==5.9 20140913-1+b1",
+        "Apt > libncursesw5==5.9 20140913-1+b1",
+        "Apt > libnettle4==2.7.1-5 deb8u2",
+        "Apt > libnspr4==2:4.12-1 debu8u1",
+        "Apt > libnspr4-dev==2:4.12-1 debu8u1",
+        "Apt > libnss3==2:3.26-1 debu8u3",
+        "Apt > libnss3-dev==2:3.26-1 debu8u3",
+        "Apt > libopenblas-base==0.2.12-1",
+        "Apt > libopenblas-dev==0.2.12-1",
+        "Apt > libopenexr6==1.6.1-8",
+        "Apt > libp11-kit-dev==0.20.7-1",
+        "Apt > libp11-kit0==0.20.7-1",
+        "Apt > libpam-modules==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpam-modules-bin==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpam-runtime==1.1.8-3.1 deb8u1",
+        "Apt > libpam0g==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpango-1.0-0==1.36.8-3",
+        "Apt > libpangocairo-1.0-0==1.36.8-3",
+        "Apt > libpangoft2-1.0-0==1.36.8-3",
+        "Apt > libpathplan4==2.38.0-7",
+        "Apt > libpcre3==2:8.35-3.3 deb8u4",
+        "Apt > libpcre3-dev==2:8.35-3.3 deb8u4",
+        "Apt > libpcrecpp0==2:8.35-3.3 deb8u4",
+        "Apt > libpixman-1-0==0.32.6-3",
+        "Apt > libpng12-0==1.2.50-2 deb8u2",
+        "Apt > libpng12-dev==1.2.50-2 deb8u2",
+        "Apt > libpopt0==1.16-10",
+        "Apt > libpq-dev==9.4.8-0 deb8u1",
+        "Apt > libpq5==9.4.8-0 deb8u1",
+        "Apt > libprocps3==2:3.3.9-9",
+        "Apt > libpsl0==0.5.1-1",
+        "Apt > libpython-stdlib==2.7.9-1",
+        "Apt > libpython2.7-minimal==2.7.9-2 deb8u2",
+        "Apt > libpython2.7-stdlib==2.7.9-2 deb8u2",
+        "Apt > libquadmath0==4.9.2-10 deb8u1",
+        "Apt > libreadline-dev==6.3-8 b3",
+        "Apt > libreadline6==6.3-8 b3",
+        "Apt > libreadline6-dev==6.3-8 b3",
+        "Apt > librsvg2-2==2.40.5-1 deb8u2",
+        "Apt > librsvg2-common==2.40.5-1 deb8u2",
+        "Apt > librtmp1==2.4 20150115.gita107cef-1",
+        "Apt > libsasl2-2==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libsasl2-dev==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libsasl2-modules-db==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libselinux1==2.3-2",
+        "Apt > libsemanage-common==2.3-1",
+        "Apt > libsemanage1==2.3-1 b1",
+        "Apt > libsepol1==2.3-2",
+        "Apt > libserf-1-1==1.3.8-1",
+        "Apt > libsigsegv2==2.10-4 b1",
+        "Apt > libslang2==2.3.0-2",
+        "Apt > libsm6==2:1.2.2-1 b1",
+        "Apt > libsmartcols1==2.25.2-6",
+        "Apt > libsqlite3-0==3.8.7.1-1 deb8u1",
+        "Apt > libsqlite3-dev==3.8.7.1-1 deb8u1",
+        "Apt > libss2==1.42.12-1.1",
+        "Apt > libssh2-1==1.4.3-4.1 deb8u1",
+        "Apt > libssl-dev==1.0.1t-1 deb8u2",
+        "Apt > libssl1.0.0==1.0.1t-1 deb8u2",
+        "Apt > libstdc++-4.9-dev==4.9.2-10 deb8u1",
+        "Apt > libstdc++6==4.9.2-10 deb8u1",
+        "Apt > libsvn1==1.8.10-6 deb8u4",
+        "Apt > libsystemd0==215-17 deb8u4",
+        "Apt > libtasn1-6==4.2-3 deb8u3",
+        "Apt > libtasn1-6-dev==4.2-3 deb8u3",
+        "Apt > libtasn1-doc==4.2-3 deb8u3",
+        "Apt > libtext-charwidth-perl==0.04-7 b3",
+        "Apt > libtext-iconv-perl==1.7-5 b2",
+        "Apt > libtext-wrapi18n-perl==0.06-7",
+        "Apt > libthai-data==0.1.21-1",
+        "Apt > libthai0==0.1.21-1",
+        "Apt > libtiff5==4.0.3-12.3 deb8u1",
+        "Apt > libtiffxx5==4.0.3-12.3 deb8u1",
+        "Apt > libtimedate-perl==2.3000-2",
+        "Apt > libtinfo-dev==5.9 20140913-1+b1",
+        "Apt > libtinfo5==5.9 20140913-1+b1",
+        "Apt > libtool==2.4.2-1.11",
+        "Apt > libtsan0==4.9.2-10 deb8u1",
+        "Apt > libubsan0==4.9.2-10 deb8u1",
+        "Apt > libudev1==215-17 deb8u4",
+        "Apt > libusb-0.1-4==2:0.1.12-25",
+        "Apt > libustr-1.0-1==1.0.4-3 b2",
+        "Apt > libuuid1==2.25.2-6",
+        "Apt > libvpx1==1.3.0-3",
+        "Apt > libwebp-dev==0.4.1-1.2 b2",
+        "Apt > libwebp5==0.4.1-1.2 b2",
+        "Apt > libwebpdemux1==0.4.1-1.2 b2",
+        "Apt > libwebpmux1==0.4.1-1.2 b2",
+        "Apt > libwmf0.2-7==0.2.8.4-10.3 deb8u1",
+        "Apt > libx11-6==2:1.6.2-3",
+        "Apt > libx11-data==2:1.6.2-3",
+        "Apt > libxau6==1:1.0.8-1",
+        "Apt > libxcb-render0==1.10-3 b1",
+        "Apt > libxcb-shm0==1.10-3 b1",
+        "Apt > libxcb1==1.10-3 b1",
+        "Apt > libxdmcp6==1:1.1.1-1 b1",
+        "Apt > libxdot4==2.38.0-7",
+        "Apt > libxext6==2:1.3.3-1",
+        "Apt > libxml2==2.9.1 dfsg1-5+deb8u7",
+        "Apt > libxml2-dev==2.9.1 dfsg1-5+deb8u7",
+        "Apt > libxmlsec1==1.2.20-2 b1",
+        "Apt > libxmlsec1-dev==1.2.20-2 b1",
+        "Apt > libxmlsec1-gcrypt==1.2.20-2 b1",
+        "Apt > libxmlsec1-gnutls==1.2.20-2 b1",
+        "Apt > libxmlsec1-nss==1.2.20-2 b1",
+        "Apt > libxmlsec1-openssl==1.2.20-2 b1",
+        "Apt > libxpm4==1:3.5.11-1 b1",
+        "Apt > libxrender1==1:0.9.8-1 b1",
+        "Apt > libxslt1-dev==1.1.28-2 b2",
+        "Apt > libxslt1.1==1.1.28-2 b2",
+        "Apt > libxt6==1:1.1.4-1 b1",
+        "Apt > libyaml-0-2==0.1.6-3",
+        "Apt > libyaml-dev==0.1.6-3",
+        "Apt > linux-libc-dev==3.16.7-ckt25-2",
+        "Apt > login==1:4.2-3 deb8u1",
+        "Apt > logrotate==3.8.7-1 b1",
+        "Apt > lsb-base==4.1 Debian13+nmu1",
+        "Apt > m4==1.4.17-4",
+        "Apt > make==4.0-8.1",
+        "Apt > mawk==1.3.3-17",
+        "Apt > mime-support==3.58",
+        "Apt > mount==2.25.2-6",
+        "Apt > multiarch-support==2.19-18 deb8u4",
+        "Apt > mysql-common==5.5.49-0 deb8u1",
+        "Apt > ncurses-base==5.9 20140913-1",
+        "Apt > ncurses-bin==5.9 20140913-1+b1",
+        "Apt > netbase==5.3",
+        "Apt > nettle-dev==2.7.1-5 deb8u2",
+        "Apt > openssh-client==1:6.7p1-5 deb8u2",
+        "Apt > openssl==1.0.1t-1 deb8u9",
+        "Apt > passwd==1:4.2-3 deb8u1",
+        "Apt > patch==2.7.5-1",
+        "Apt > perl==5.20.2-3 deb8u5",
+        "Apt > perl-base==5.20.2-3 deb8u5",
+        "Apt > perl-modules==5.20.2-3 deb8u5",
+        "Apt > pkg-config==0.28-1",
+        "Apt > procps==2:3.3.9-9",
+        "Apt > psmisc==22.21-2",
+        "Apt > python==2.7.9-1",
+        "Apt > python-minimal==2.7.9-1",
+        "Apt > python2.7==2.7.9-2 deb8u2",
+        "Apt > python2.7-minimal==2.7.9-2 deb8u2",
+        "Apt > readline-common==6.3-8",
+        "Apt > rsyslog==8.4.2-1 deb8u2",
+        "Apt > sed==4.2.2-4 b1",
+        "Apt > sensible-utils==0.0.9",
+        "Apt > shared-mime-info==1.3-1",
+        "Apt > squashfs-tools==1:4.2 20130409-2",
+        "Apt > startpar==0.59-3",
+        "Apt > subversion==1.8.10-6 deb8u4",
+        "Apt > systemd==215-17 deb8u4",
+        "Apt > systemd-sysv==215-17 deb8u4",
+        "Apt > sysv-rc==2.88dsf-59",
+        "Apt > sysvinit-utils==2.88dsf-59",
+        "Apt > tar==1.27.1-2 b1",
+        "Apt > tzdata==2016d-0 deb8u1",
+        "Apt > ucf==3.0030",
+        "Apt > udev==215-17 deb8u4",
+        "Apt > util-linux==2.25.2-6",
+        "Apt > vim==2:7.4.488-7 deb8u3",
+        "Apt > vim-common==2:7.4.488-7 deb8u3",
+        "Apt > vim-runtime==2:7.4.488-7 deb8u3",
+        "Apt > wget==1.16-1 deb8u5",
+        "Apt > x11-common==1:7.7 7",
+        "Apt > xz-utils==5.1.1alpha 20120614-2+b3",
+        "Apt > zlib1g==1:1.2.8.dfsg-2 b1",
+        "Apt > zlib1g-dev==1:1.2.8.dfsg-2 b1",
+        "Pip > Cython==0.29",
+        "Pip > amqp==1.4.9",
+        "Pip > cachetools==2.1.0",
+        "Pip > certifi==2018.10.15",
+        "Pip > chardet==3.0.4",
+        "Pip > coreapi==2.3.3",
+        "Pip > defusedxml==0.5.0",
+        "Pip > django_datatables_view==1.17.0",
+        "Pip > django_extensions==2.1.3",
+        "Pip > google_auth_httplib2==0.0.3",
+        "Pip > h5py==2.8.0",
+        "Pip > idna==2.7",
+        "Pip > isodate==0.6.0",
+        "Pip > jsonfield==2.0.2",
+        "Pip > kombu==3.0.37",
+        "Pip > lxml==4.2.5",
+        "Pip > numexpr==2.6.8",
+        "Pip > numpy==1.15.3",
+        "Pip > oauthlib==2.1.0",
+        "Pip > opbeat==3.6.1",
+        "Pip > pip==18.1",
+        "Pip > pkgconfig==1.4.0",
+        "Pip > pyasn1==0.4.4",
+        "Pip > pyasn1_modules==0.2.2",
+        "Pip > pytz==2018.6",
+        "Pip > redis==2.10.6",
+        "Pip > requests==2.20.0",
+        "Pip > requests_oauthlib==1.0.0",
+        "Pip > requests_toolbelt==0.8.0",
+        "Pip > rsa==4.0",
+        "Pip > setuptools==18.2",
+        "Pip > six==1.11.0",
+        "Pip > ua_parser==0.8.0",
+        "Pip > uritemplate==3.0.0",
+        "Pip > urllib3==1.24"
+    ],
+    "@context": "http://www.schema.org"
+}
+</code></pre>
+</div>
+<script type="application/ld+json">
+{
+    "environment": [
+        "PYTHONUNBUFFERED=1"
+    ],
+    "description": "A Dockerfile build recipe",
+    "name": "vanessa/sregistry",
+    "ContainerImage": "python:3.5.1",
+    "operatingSystem": "linux",
+    "softwareVersion": "sha256:f2a4c6877194f875708c62542eaf728660bc04d520163f8b2943d35669540bf7",
+    "identifier": [
+        "vanessa/sregistry:latest"
+    ],
+    "url": "https://hub.docker.com/r/vanessa/sregistry",
+    "alternateName": "Singularity Registry",
+    "softwareHelp": "https://singularityhub.github.io/sregistry",
+    "citation": "http://joss.theoj.org/papers/050362b7e7691d2a5d0ebed8251bc01e",
+    "license": "https://github.com/singularityhub/sregistry/blob/master/LICENSE",
+    "keywords": "container, containers, singularity, singularity registry",
+    "softwareRequirements": [
+        "Apt > acl==2.2.52-2",
+        "Apt > adduser==3.113 nmu3",
+        "Apt > anacron==2.3-23",
+        "Apt > apt==1.0.9.8.3",
+        "Apt > autoconf==2.69-8",
+        "Apt > automake==1:1.14.1-4 deb8u1",
+        "Apt > autotools-dev==20140911.1",
+        "Apt > base-files==8 deb8u4",
+        "Apt > base-passwd==3.5.37",
+        "Apt > bash==4.3-11 b1",
+        "Apt > binutils==2.25-5",
+        "Apt > bsd-mailx==8.1.2-0.20141216cvs-2",
+        "Apt > bsdutils==1:2.25.2-6",
+        "Apt > build-essential==11.7",
+        "Apt > bzip2==1.0.6-7 b3",
+        "Apt > ca-certificates==20141019 deb8u1",
+        "Apt > cmake==3.0.2-1 deb8u1",
+        "Apt > cmake-data==3.0.2-1 deb8u1",
+        "Apt > comerr-dev==2.1-1.42.12-1.1",
+        "Apt > coreutils==8.23-4",
+        "Apt > cpp==4:4.9.2-2",
+        "Apt > cpp-4.9==4.9.2-10 deb8u1",
+        "Apt > cron==3.0pl1-127 deb8u1",
+        "Apt > curl==7.38.0-4 deb8u3",
+        "Apt > dash==0.5.7-4 b1",
+        "Apt > debconf==1.5.56",
+        "Apt > debconf-i18n==1.5.56",
+        "Apt > debian-archive-keyring==2014.3",
+        "Apt > debianutils==4.4 b1",
+        "Apt > diffutils==1:3.3-1 b1",
+        "Apt > dmsetup==2:1.02.90-2.2",
+        "Apt > dpkg==1.17.26",
+        "Apt > dpkg-dev==1.17.27",
+        "Apt > e2fslibs==1.42.12-1.1",
+        "Apt > e2fsprogs==1.42.12-1.1",
+        "Apt > exim4==4.84.2-2 deb8u5",
+        "Apt > exim4-base==4.84.2-2 deb8u5",
+        "Apt > exim4-config==4.84.2-2 deb8u5",
+        "Apt > exim4-daemon-light==4.84.2-2 deb8u5",
+        "Apt > fakeroot==1.20.2-1",
+        "Apt > file==1:5.22 15-2+deb8u1",
+        "Apt > findutils==4.4.2-9 b1",
+        "Apt > fontconfig==2.11.0-6.3",
+        "Apt > fontconfig-config==2.11.0-6.3",
+        "Apt > fonts-dejavu-core==2.34-1",
+        "Apt > g++==4:4.9.2-2",
+        "Apt > g++-4.9==4.9.2-10 deb8u1",
+        "Apt > gcc==4:4.9.2-2",
+        "Apt > gcc-4.8-base==4.8.4-1",
+        "Apt > gcc-4.9==4.9.2-10 deb8u1",
+        "Apt > gcc-4.9-base==4.9.2-10 deb8u1",
+        "Apt > geoip-bin==1.6.2-4",
+        "Apt > git==1:2.1.4-2.1 deb8u7",
+        "Apt > git-man==1:2.1.4-2.1 deb8u2",
+        "Apt > gnupg==1.4.18-7 deb8u1",
+        "Apt > gpgv==1.4.18-7 deb8u1",
+        "Apt > grep==2.20-4.1",
+        "Apt > gzip==1.6-4",
+        "Apt > hdf5-helpers==1.8.13 docs-15+deb8u1",
+        "Apt > hicolor-icon-theme==0.13-1",
+        "Apt > hostname==3.15",
+        "Apt > imagemagick==8:6.8.9.9-5 deb8u3",
+        "Apt > imagemagick-6.q16==8:6.8.9.9-5 deb8u3",
+        "Apt > imagemagick-common==8:6.8.9.9-5 deb8u3",
+        "Apt > inetutils-ping==2:1.9.2.39.3a460-3",
+        "Apt > init==1.22",
+        "Apt > init-system-helpers==1.22",
+        "Apt > initscripts==2.88dsf-59",
+        "Apt > insserv==1.14.0-5",
+        "Apt > iproute2==3.16.0-2",
+        "Apt > krb5-multidev==1.12.1 dfsg-19+deb8u2",
+        "Apt > libacl1==2.2.52-2",
+        "Apt > libalgorithm-diff-perl==1.19.02-3",
+        "Apt > libalgorithm-diff-xs-perl==0.04-3 b1",
+        "Apt > libalgorithm-merge-perl==0.08-2",
+        "Apt > libapr1==1.5.1-3",
+        "Apt > libaprutil1==1.5.4-1",
+        "Apt > libapt-pkg4.12==1.0.9.8.3",
+        "Apt > libarchive-dev==3.1.2-11 deb8u3",
+        "Apt > libarchive13==3.1.2-11 deb8u3",
+        "Apt > libasan1==4.9.2-10 deb8u1",
+        "Apt > libatomic1==4.9.2-10 deb8u1",
+        "Apt > libattr1==1:2.4.47-2",
+        "Apt > libaudit-common==1:2.4-1",
+        "Apt > libaudit1==1:2.4-1 b1",
+        "Apt > libblas-common==1.2.20110419-10",
+        "Apt > libblas-dev==1.2.20110419-10",
+        "Apt > libblas3==1.2.20110419-10",
+        "Apt > libblkid1==2.25.2-6",
+        "Apt > libbsd0==0.7.0-2",
+        "Apt > libbz2-1.0==1.0.6-7 b3",
+        "Apt > libbz2-dev==1.0.6-7 b3",
+        "Apt > libc-bin==2.19-18 deb8u4",
+        "Apt > libc-dev-bin==2.19-18 deb8u4",
+        "Apt > libc6==2.19-18 deb8u4",
+        "Apt > libc6-dev==2.19-18 deb8u4",
+        "Apt > libcairo-gobject2==1.14.0-2.1 deb8u1",
+        "Apt > libcairo-script-interpreter2==1.14.0-2.1 deb8u1",
+        "Apt > libcairo2==1.14.0-2.1 deb8u1",
+        "Apt > libcap2==1:2.24-8",
+        "Apt > libcap2-bin==1:2.24-8",
+        "Apt > libcdt5==2.38.0-7",
+        "Apt > libcgraph6==2.38.0-7",
+        "Apt > libcilkrts5==4.9.2-10 deb8u1",
+        "Apt > libcloog-isl4==0.18.2-1 b2",
+        "Apt > libcomerr2==1.42.12-1.1",
+        "Apt > libcroco3==0.6.8-3 b1",
+        "Apt > libcryptsetup4==2:1.6.6-5",
+        "Apt > libcurl3==7.38.0-4 deb8u3",
+        "Apt > libcurl3-gnutls==7.38.0-4 deb8u3",
+        "Apt > libcurl4-openssl-dev==7.38.0-4 deb8u3",
+        "Apt > libdatrie1==0.2.8-1",
+        "Apt > libdb-dev==5.3.0 b1",
+        "Apt > libdb5.3==5.3.28-9",
+        "Apt > libdb5.3-dev==5.3.28-9",
+        "Apt > libdebconfclient0==0.192",
+        "Apt > libdevmapper1.02.1==2:1.02.90-2.2",
+        "Apt > libdjvulibre-text==3.5.25.4-4",
+        "Apt > libdjvulibre21==3.5.25.4-4 b1",
+        "Apt > libdpkg-perl==1.17.27",
+        "Apt > libedit2==3.1-20140620-2",
+        "Apt > libelfg0==0.8.13-5",
+        "Apt > liberror-perl==0.17-1.1",
+        "Apt > libestr0==0.1.9-1.1",
+        "Apt > libevent-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-core-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-dev==2.0.21-stable-2",
+        "Apt > libevent-extra-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-openssl-2.0-5==2.0.21-stable-2",
+        "Apt > libevent-pthreads-2.0-5==2.0.21-stable-2",
+        "Apt > libexif12==0.6.21-2",
+        "Apt > libexpat1==2.1.0-6 deb8u3",
+        "Apt > libfakeroot==1.20.2-1",
+        "Apt > libffi-dev==3.1-2 b2",
+        "Apt > libffi6==3.1-2 b2",
+        "Apt > libfftw3-double3==3.3.4-2",
+        "Apt > libfile-fcntllock-perl==0.22-1 b1",
+        "Apt > libfontconfig1==2.11.0-6.3",
+        "Apt > libfreetype6==2.5.2-3 deb8u1",
+        "Apt > libgcc-4.9-dev==4.9.2-10 deb8u1",
+        "Apt > libgcc1==1:4.9.2-10 deb8u1",
+        "Apt > libgcrypt20==1.6.3-2 deb8u5",
+        "Apt > libgcrypt20-dev==1.6.3-2 deb8u5",
+        "Apt > libgd3==2.1.0-5 deb8u3",
+        "Apt > libgdbm3==1.8.3-13.1",
+        "Apt > libgdk-pixbuf2.0-0==2.31.1-2 deb8u5",
+        "Apt > libgdk-pixbuf2.0-common==2.31.1-2 deb8u5",
+        "Apt > libgeoip-dev==1.6.2-4",
+        "Apt > libgeoip1==1.6.2-4",
+        "Apt > libgeos-3.4.2==3.4.2-6",
+        "Apt > libgeos-c1==3.4.2-6",
+        "Apt > libgeos-dev==3.4.2-6",
+        "Apt > libgfortran3==4.9.2-10 deb8u1",
+        "Apt > libgirepository-1.0-1==1.42.0-2.2",
+        "Apt > libglib2.0-0==2.42.1-1 b1",
+        "Apt > libglib2.0-bin==2.42.1-1 b1",
+        "Apt > libglib2.0-data==2.42.1-1",
+        "Apt > libglib2.0-dev==2.42.1-1 b1",
+        "Apt > libgmp-dev==2:6.0.0 dfsg-6",
+        "Apt > libgmp10==2:6.0.0 dfsg-6",
+        "Apt > libgmpxx4ldbl==2:6.0.0 dfsg-6",
+        "Apt > libgnutls-deb0-28==3.3.8-6 deb8u7",
+        "Apt > libgnutls-openssl27==3.3.8-6 deb8u7",
+        "Apt > libgnutls28-dev==3.3.8-6 deb8u7",
+        "Apt > libgnutlsxx28==3.3.8-6 deb8u7",
+        "Apt > libgomp1==4.9.2-10 deb8u1",
+        "Apt > libgpg-error-dev==1.17-3",
+        "Apt > libgpg-error0==1.17-3",
+        "Apt > libgpm2==1.20.4-6.1 b2",
+        "Apt > libgraphite2-3==1.3.6-1~deb8u1",
+        "Apt > libgssapi-krb5-2==1.12.1 dfsg-19+deb8u2",
+        "Apt > libgssrpc4==1.12.1 dfsg-19+deb8u2",
+        "Apt > libgvc6==2.38.0-7",
+        "Apt > libgvpr2==2.38.0-7",
+        "Apt > libharfbuzz0b==0.9.35-2",
+        "Apt > libhdf5-8==1.8.13 docs-15+deb8u1",
+        "Apt > libhdf5-cpp-8==1.8.13 docs-15+deb8u1",
+        "Apt > libhdf5-dev==1.8.13 docs-15+deb8u1",
+        "Apt > libhogweed2==2.7.1-5 deb8u2",
+        "Apt > libice6==2:1.0.9-1 b1",
+        "Apt > libicu52==52.1-8 deb8u3",
+        "Apt > libidn11==1.29-1 deb8u1",
+        "Apt > libilmbase6==1.0.1-6.1",
+        "Apt > libisl10==0.12.2-2",
+        "Apt > libitm1==4.9.2-10 deb8u1",
+        "Apt > libjasper1==1.900.1-debian1-2.4 deb8u1",
+        "Apt > libjbig0==2.1-3.1",
+        "Apt > libjpeg-dev==1:1.3.1-12",
+        "Apt > libjpeg62-turbo==1:1.3.1-12",
+        "Apt > libjpeg62-turbo-dev==1:1.3.1-12",
+        "Apt > libjson-c2==0.11-4",
+        "Apt > libk5crypto3==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkadm5clnt-mit9==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkadm5srv-mit9==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkdb5-7==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkeyutils1==1.5.9-5 b1",
+        "Apt > libkmod2==18-3",
+        "Apt > libkrb5-3==1.12.1 dfsg-19+deb8u2",
+        "Apt > libkrb5support0==1.12.1 dfsg-19+deb8u2",
+        "Apt > liblcms2-2==2.6-3 b3",
+        "Apt > libldap-2.4-2==2.4.40 dfsg-1+deb8u4",
+        "Apt > libldap2-dev==2.4.40 dfsg-1+deb8u4",
+        "Apt > liblocale-gettext-perl==1.05-8 b1",
+        "Apt > liblockfile-bin==1.09-6",
+        "Apt > liblockfile1==1.09-6",
+        "Apt > liblogging-stdlog0==1.0.4-1",
+        "Apt > liblognorm1==1.0.1-3",
+        "Apt > liblqr-1-0==0.4.2-2",
+        "Apt > liblsan0==4.9.2-10 deb8u1",
+        "Apt > libltdl-dev==2.4.2-1.11",
+        "Apt > libltdl7==2.4.2-1.11",
+        "Apt > liblzma-dev==5.1.1alpha 20120614-2+b3",
+        "Apt > liblzma5==5.1.1alpha 20120614-2+b3",
+        "Apt > liblzo2-2==2.08-1.2",
+        "Apt > libmagic1==1:5.22 15-2+deb8u1",
+        "Apt > libmagickcore-6.q16-2==8:6.8.9.9-5 deb8u3",
+        "Apt > libmagickcore-6.q16-2-extra==8:6.8.9.9-5 deb8u3",
+        "Apt > libmagickwand-6.q16-2==8:6.8.9.9-5 deb8u3",
+        "Apt > libmount1==2.25.2-6",
+        "Apt > libmpc3==1.0.2-1",
+        "Apt > libmpfr4==3.1.2-2",
+        "Apt > libmysqlclient-dev==5.5.49-0 deb8u1",
+        "Apt > libmysqlclient18==5.5.49-0 deb8u1",
+        "Apt > libncurses5==5.9 20140913-1+b1",
+        "Apt > libncurses5-dev==5.9 20140913-1+b1",
+        "Apt > libncursesw5==5.9 20140913-1+b1",
+        "Apt > libnettle4==2.7.1-5 deb8u2",
+        "Apt > libnspr4==2:4.12-1 debu8u1",
+        "Apt > libnspr4-dev==2:4.12-1 debu8u1",
+        "Apt > libnss3==2:3.26-1 debu8u3",
+        "Apt > libnss3-dev==2:3.26-1 debu8u3",
+        "Apt > libopenblas-base==0.2.12-1",
+        "Apt > libopenblas-dev==0.2.12-1",
+        "Apt > libopenexr6==1.6.1-8",
+        "Apt > libp11-kit-dev==0.20.7-1",
+        "Apt > libp11-kit0==0.20.7-1",
+        "Apt > libpam-modules==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpam-modules-bin==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpam-runtime==1.1.8-3.1 deb8u1",
+        "Apt > libpam0g==1.1.8-3.1 deb8u1+b1",
+        "Apt > libpango-1.0-0==1.36.8-3",
+        "Apt > libpangocairo-1.0-0==1.36.8-3",
+        "Apt > libpangoft2-1.0-0==1.36.8-3",
+        "Apt > libpathplan4==2.38.0-7",
+        "Apt > libpcre3==2:8.35-3.3 deb8u4",
+        "Apt > libpcre3-dev==2:8.35-3.3 deb8u4",
+        "Apt > libpcrecpp0==2:8.35-3.3 deb8u4",
+        "Apt > libpixman-1-0==0.32.6-3",
+        "Apt > libpng12-0==1.2.50-2 deb8u2",
+        "Apt > libpng12-dev==1.2.50-2 deb8u2",
+        "Apt > libpopt0==1.16-10",
+        "Apt > libpq-dev==9.4.8-0 deb8u1",
+        "Apt > libpq5==9.4.8-0 deb8u1",
+        "Apt > libprocps3==2:3.3.9-9",
+        "Apt > libpsl0==0.5.1-1",
+        "Apt > libpython-stdlib==2.7.9-1",
+        "Apt > libpython2.7-minimal==2.7.9-2 deb8u2",
+        "Apt > libpython2.7-stdlib==2.7.9-2 deb8u2",
+        "Apt > libquadmath0==4.9.2-10 deb8u1",
+        "Apt > libreadline-dev==6.3-8 b3",
+        "Apt > libreadline6==6.3-8 b3",
+        "Apt > libreadline6-dev==6.3-8 b3",
+        "Apt > librsvg2-2==2.40.5-1 deb8u2",
+        "Apt > librsvg2-common==2.40.5-1 deb8u2",
+        "Apt > librtmp1==2.4 20150115.gita107cef-1",
+        "Apt > libsasl2-2==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libsasl2-dev==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libsasl2-modules-db==2.1.26.dfsg1-13 deb8u1",
+        "Apt > libselinux1==2.3-2",
+        "Apt > libsemanage-common==2.3-1",
+        "Apt > libsemanage1==2.3-1 b1",
+        "Apt > libsepol1==2.3-2",
+        "Apt > libserf-1-1==1.3.8-1",
+        "Apt > libsigsegv2==2.10-4 b1",
+        "Apt > libslang2==2.3.0-2",
+        "Apt > libsm6==2:1.2.2-1 b1",
+        "Apt > libsmartcols1==2.25.2-6",
+        "Apt > libsqlite3-0==3.8.7.1-1 deb8u1",
+        "Apt > libsqlite3-dev==3.8.7.1-1 deb8u1",
+        "Apt > libss2==1.42.12-1.1",
+        "Apt > libssh2-1==1.4.3-4.1 deb8u1",
+        "Apt > libssl-dev==1.0.1t-1 deb8u2",
+        "Apt > libssl1.0.0==1.0.1t-1 deb8u2",
+        "Apt > libstdc++-4.9-dev==4.9.2-10 deb8u1",
+        "Apt > libstdc++6==4.9.2-10 deb8u1",
+        "Apt > libsvn1==1.8.10-6 deb8u4",
+        "Apt > libsystemd0==215-17 deb8u4",
+        "Apt > libtasn1-6==4.2-3 deb8u3",
+        "Apt > libtasn1-6-dev==4.2-3 deb8u3",
+        "Apt > libtasn1-doc==4.2-3 deb8u3",
+        "Apt > libtext-charwidth-perl==0.04-7 b3",
+        "Apt > libtext-iconv-perl==1.7-5 b2",
+        "Apt > libtext-wrapi18n-perl==0.06-7",
+        "Apt > libthai-data==0.1.21-1",
+        "Apt > libthai0==0.1.21-1",
+        "Apt > libtiff5==4.0.3-12.3 deb8u1",
+        "Apt > libtiffxx5==4.0.3-12.3 deb8u1",
+        "Apt > libtimedate-perl==2.3000-2",
+        "Apt > libtinfo-dev==5.9 20140913-1+b1",
+        "Apt > libtinfo5==5.9 20140913-1+b1",
+        "Apt > libtool==2.4.2-1.11",
+        "Apt > libtsan0==4.9.2-10 deb8u1",
+        "Apt > libubsan0==4.9.2-10 deb8u1",
+        "Apt > libudev1==215-17 deb8u4",
+        "Apt > libusb-0.1-4==2:0.1.12-25",
+        "Apt > libustr-1.0-1==1.0.4-3 b2",
+        "Apt > libuuid1==2.25.2-6",
+        "Apt > libvpx1==1.3.0-3",
+        "Apt > libwebp-dev==0.4.1-1.2 b2",
+        "Apt > libwebp5==0.4.1-1.2 b2",
+        "Apt > libwebpdemux1==0.4.1-1.2 b2",
+        "Apt > libwebpmux1==0.4.1-1.2 b2",
+        "Apt > libwmf0.2-7==0.2.8.4-10.3 deb8u1",
+        "Apt > libx11-6==2:1.6.2-3",
+        "Apt > libx11-data==2:1.6.2-3",
+        "Apt > libxau6==1:1.0.8-1",
+        "Apt > libxcb-render0==1.10-3 b1",
+        "Apt > libxcb-shm0==1.10-3 b1",
+        "Apt > libxcb1==1.10-3 b1",
+        "Apt > libxdmcp6==1:1.1.1-1 b1",
+        "Apt > libxdot4==2.38.0-7",
+        "Apt > libxext6==2:1.3.3-1",
+        "Apt > libxml2==2.9.1 dfsg1-5+deb8u7",
+        "Apt > libxml2-dev==2.9.1 dfsg1-5+deb8u7",
+        "Apt > libxmlsec1==1.2.20-2 b1",
+        "Apt > libxmlsec1-dev==1.2.20-2 b1",
+        "Apt > libxmlsec1-gcrypt==1.2.20-2 b1",
+        "Apt > libxmlsec1-gnutls==1.2.20-2 b1",
+        "Apt > libxmlsec1-nss==1.2.20-2 b1",
+        "Apt > libxmlsec1-openssl==1.2.20-2 b1",
+        "Apt > libxpm4==1:3.5.11-1 b1",
+        "Apt > libxrender1==1:0.9.8-1 b1",
+        "Apt > libxslt1-dev==1.1.28-2 b2",
+        "Apt > libxslt1.1==1.1.28-2 b2",
+        "Apt > libxt6==1:1.1.4-1 b1",
+        "Apt > libyaml-0-2==0.1.6-3",
+        "Apt > libyaml-dev==0.1.6-3",
+        "Apt > linux-libc-dev==3.16.7-ckt25-2",
+        "Apt > login==1:4.2-3 deb8u1",
+        "Apt > logrotate==3.8.7-1 b1",
+        "Apt > lsb-base==4.1 Debian13+nmu1",
+        "Apt > m4==1.4.17-4",
+        "Apt > make==4.0-8.1",
+        "Apt > mawk==1.3.3-17",
+        "Apt > mime-support==3.58",
+        "Apt > mount==2.25.2-6",
+        "Apt > multiarch-support==2.19-18 deb8u4",
+        "Apt > mysql-common==5.5.49-0 deb8u1",
+        "Apt > ncurses-base==5.9 20140913-1",
+        "Apt > ncurses-bin==5.9 20140913-1+b1",
+        "Apt > netbase==5.3",
+        "Apt > nettle-dev==2.7.1-5 deb8u2",
+        "Apt > openssh-client==1:6.7p1-5 deb8u2",
+        "Apt > openssl==1.0.1t-1 deb8u9",
+        "Apt > passwd==1:4.2-3 deb8u1",
+        "Apt > patch==2.7.5-1",
+        "Apt > perl==5.20.2-3 deb8u5",
+        "Apt > perl-base==5.20.2-3 deb8u5",
+        "Apt > perl-modules==5.20.2-3 deb8u5",
+        "Apt > pkg-config==0.28-1",
+        "Apt > procps==2:3.3.9-9",
+        "Apt > psmisc==22.21-2",
+        "Apt > python==2.7.9-1",
+        "Apt > python-minimal==2.7.9-1",
+        "Apt > python2.7==2.7.9-2 deb8u2",
+        "Apt > python2.7-minimal==2.7.9-2 deb8u2",
+        "Apt > readline-common==6.3-8",
+        "Apt > rsyslog==8.4.2-1 deb8u2",
+        "Apt > sed==4.2.2-4 b1",
+        "Apt > sensible-utils==0.0.9",
+        "Apt > shared-mime-info==1.3-1",
+        "Apt > squashfs-tools==1:4.2 20130409-2",
+        "Apt > startpar==0.59-3",
+        "Apt > subversion==1.8.10-6 deb8u4",
+        "Apt > systemd==215-17 deb8u4",
+        "Apt > systemd-sysv==215-17 deb8u4",
+        "Apt > sysv-rc==2.88dsf-59",
+        "Apt > sysvinit-utils==2.88dsf-59",
+        "Apt > tar==1.27.1-2 b1",
+        "Apt > tzdata==2016d-0 deb8u1",
+        "Apt > ucf==3.0030",
+        "Apt > udev==215-17 deb8u4",
+        "Apt > util-linux==2.25.2-6",
+        "Apt > vim==2:7.4.488-7 deb8u3",
+        "Apt > vim-common==2:7.4.488-7 deb8u3",
+        "Apt > vim-runtime==2:7.4.488-7 deb8u3",
+        "Apt > wget==1.16-1 deb8u5",
+        "Apt > x11-common==1:7.7 7",
+        "Apt > xz-utils==5.1.1alpha 20120614-2+b3",
+        "Apt > zlib1g==1:1.2.8.dfsg-2 b1",
+        "Apt > zlib1g-dev==1:1.2.8.dfsg-2 b1",
+        "Pip > Cython==0.29",
+        "Pip > amqp==1.4.9",
+        "Pip > cachetools==2.1.0",
+        "Pip > certifi==2018.10.15",
+        "Pip > chardet==3.0.4",
+        "Pip > coreapi==2.3.3",
+        "Pip > defusedxml==0.5.0",
+        "Pip > django_datatables_view==1.17.0",
+        "Pip > django_extensions==2.1.3",
+        "Pip > google_auth_httplib2==0.0.3",
+        "Pip > h5py==2.8.0",
+        "Pip > idna==2.7",
+        "Pip > isodate==0.6.0",
+        "Pip > jsonfield==2.0.2",
+        "Pip > kombu==3.0.37",
+        "Pip > lxml==4.2.5",
+        "Pip > numexpr==2.6.8",
+        "Pip > numpy==1.15.3",
+        "Pip > oauthlib==2.1.0",
+        "Pip > opbeat==3.6.1",
+        "Pip > pip==18.1",
+        "Pip > pkgconfig==1.4.0",
+        "Pip > pyasn1==0.4.4",
+        "Pip > pyasn1_modules==0.2.2",
+        "Pip > pytz==2018.6",
+        "Pip > redis==2.10.6",
+        "Pip > requests==2.20.0",
+        "Pip > requests_oauthlib==1.0.0",
+        "Pip > requests_toolbelt==0.8.0",
+        "Pip > rsa==4.0",
+        "Pip > setuptools==18.2",
+        "Pip > six==1.11.0",
+        "Pip > ua_parser==0.8.0",
+        "Pip > uritemplate==3.0.0",
+        "Pip > urllib3==1.24"
+    ],
+    "@context": "http://www.schema.org"
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.js"></script>
+</body>
+</html>

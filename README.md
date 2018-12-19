@@ -7,32 +7,19 @@ with [schemaorg](https://openschemas.github.io/schemaorg/#Usage) Python
 to help you to extract metadata from your datasets,
 software and other entities described in [schema.org](https://www.schema.org).
 
-## Examples
-
- - [extract-dockerfile Writeup](https://vsoch.github.io/2018/schemaorg/) to demonstrate extraction for a Dockerfile.
- - [extract-dockerfile Repository](https://github.com/openbases/extract-dockerfile)
- - [dockerfiles](https://github.com/openschemas/dockerfiles) A scaled extraction (under development) for ~30-60K Dockerfiles, a subset of the [Dinosaur Dataset](https://vsoch.github.io/datasets/2018/dockerfiles/).
-
 ## Specifications
 
-We have the following examples for production and development entities (children of "Thing")
+We have the following examples for entities (children of "Thing")
 defined in schema.org. If you don't see one you are interested here and would like an example
-developed, please [open an issue](https://www.github.com/openschemas/extracters/issues)
-
-### Production
+developed, please [open an issue](https://www.github.com/openschemas/extracters/issues).
+The recommended interaction is to use the Docker containers built for the extractor
+in each folder. We do this so each subfolder can be associated with a Github Action.
 
  - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [DataCatalog](DataCatalog): a collection or grouping of Datasets
  - [Organization](Organization): a complete organization, with a ContactPoint
  - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
-
-### Development
-
-**coming soon** [waiting on PRs](https://github.com/openschemas/schemaorg/issues/8) for container-diff. The extraction scripts are ready to go and can be viewed [here](https://github.com/openschemas/dockerfiles)
-
- - [ContainerRecipe]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ContainerRecipe/).
- - [ImageDefinition]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
-
+ - [ImageDefinition](ImageDefinition) is a kind of SoftwareSourceCode extended to describe containers. We provide a Dockerfile that builds the extractor to generate a static page for an input Dockerfile.
 
 ## What is special about those pages?
 For each of the above, the metadata shown is also embedded in the page as json-ld
@@ -45,6 +32,26 @@ case of a specification not served by production schema.org).
 
 
 # Usage
+There are two ways you can use the extractors here!
+
+## Dockerfile or Github Action
+
+The [Dockerfile](Dockerfile) in the base of the repository is built and served
+on Docker Hub at [openschemas/extractors](). Specifically, it will take an input
+Dockerfile, and use container-diff and Singularity Python Client (recipe parser)
+to generate an html page embedded with json-ld, or just the json-ld, to
+store with your recipe. Here is how to generate the html output for a local
+Dockerfile (this command uses an example provided in the container)
+
+```bash
+$ docker run -it openschemas/extractors extract --contact @vsoch
+```
+
+Here is how to use your own Dockerfile - you need to mount the volume.
+
+**under development!**
+
+## Local Usage
 
 Before running these examples, make sure you have installed the module (and note
 this module is under development, contributions are welcome!)
@@ -88,6 +95,12 @@ to generate the final template page. This file could be run in multiple places!
  - Using a tool like [datalad](https://datalad.org) that allows for version control of such metadata, and definition of extractors (also in Python).
  - As a Github hook (or action) that is run at any stage in the development process.
  - Rendered by a web server that provides Container Recipes for users that should be indexed with Google Search (e.g., Singularity Hub).
+
+## Examples
+
+ - [extract-dockerfile Writeup](https://vsoch.github.io/2018/schemaorg/) to demonstrate extraction for a Dockerfile.
+ - [extract-dockerfile Repository](https://github.com/openbases/extract-dockerfile)
+ - [dockerfiles](https://github.com/openschemas/dockerfiles) A scaled extraction (under development) for ~30-60K Dockerfiles, a subset of the [Dinosaur Dataset](https://vsoch.github.io/datasets/2018/dockerfiles/).
 
 
 ## Resources

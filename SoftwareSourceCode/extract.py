@@ -11,13 +11,12 @@ October 21, 2018
 
 '''
 
-
 from schemaorg.templates.google import make_dataset
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 import os
 
-def extract(name, description, thumbnail=None, sameAs=None, version=None,
+def extract(name, description=None, thumbnail=None, sameAs=None, version=None,
             about=None, output_file=None, person=None, repository=None,
             runtime=None, **kwargs):
 

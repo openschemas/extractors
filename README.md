@@ -7,31 +7,24 @@ with [schemaorg](https://openschemas.github.io/schemaorg/#Usage) Python
 to help you to extract metadata from your datasets,
 software and other entities described in [schema.org](https://www.schema.org).
 
-## Examples
-
- - [extract-dockerfile Writeup](https://vsoch.github.io/2018/schemaorg/) to demonstrate extraction for a Dockerfile.
- - [extract-dockerfile Repository](https://github.com/openbases/extract-dockerfile)
- - [dockerfiles](https://github.com/openschemas/dockerfiles) A scaled extraction (under development) for ~30-60K Dockerfiles, a subset of the [Dinosaur Dataset](https://vsoch.github.io/datasets/2018/dockerfiles/).
 
 ## Specifications
 
-We have the following examples for production and development entities (children of "Thing")
-defined in schema.org. If you don't see one you are interested here and would like an example
-developed, please [open an issue](https://www.github.com/openschemas/extracters/issues)
+The following specifications have Dockerfiles (and associated Github actions)
+for you to use! See the subdirectories to get usage:
 
-### Production
+ - [ImageDefinition](ImageDefinition) is a kind of SoftwareSourceCode extended to describe containers. We provide a Dockerfile that builds the extractor to generate a static page for an input Dockerfile.
+
+## Extractors (without Containers)
+
+The following examples for entities (children of "Thing")
+defined in schema.org are also provided. These specifications don't yet have Docker
+containers or Github Action extractors.
 
  - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [DataCatalog](DataCatalog): a collection or grouping of Datasets
  - [Organization](Organization): a complete organization, with a ContactPoint
  - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.
-
-### Development
-
-**coming soon** [waiting on PRs](https://github.com/openschemas/schemaorg/issues/8) for container-diff. The extraction scripts are ready to go and can be viewed [here](https://github.com/openschemas/dockerfiles)
-
- - [ContainerRecipe]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ContainerRecipe/).
- - [ImageDefinition]() example extraction shown [here](https://openbases.github.io/extract-dockerfile/ImageDefinition/).
 
 
 ## What is special about those pages?
@@ -43,9 +36,9 @@ Each folder above includes an example python script to extract metadata (`extrac
 a recipe to follow (`recipe.yml`), and the specification in yaml format (in the 
 case of a specification not served by production schema.org).
 
-
 # Usage
-
+For the Docker and Github Actions usage, see inside the [ImageDefinition](ImageDefinition)
+folder. For all other schema.org entities and local usage, details are provided here.
 Before running these examples, make sure you have installed the module (and note
 this module is under development, contributions are welcome!)
 
@@ -88,6 +81,17 @@ to generate the final template page. This file could be run in multiple places!
  - Using a tool like [datalad](https://datalad.org) that allows for version control of such metadata, and definition of extractors (also in Python).
  - As a Github hook (or action) that is run at any stage in the development process.
  - Rendered by a web server that provides Container Recipes for users that should be indexed with Google Search (e.g., Singularity Hub).
+
+### Dockerfile
+
+For the folders with associated containers, you will find a Dockerfile (and associated entrypoint.sh)! These containers
+will build the extractor into an image that can be used with Github Actions.
+
+## Examples
+
+ - [extract-dockerfile Writeup](https://vsoch.github.io/2018/schemaorg/) to demonstrate extraction for a Dockerfile.
+ - [extract-dockerfile Repository](https://github.com/openbases/extract-dockerfile)
+ - [dockerfiles](https://github.com/openschemas/dockerfiles) A scaled extraction (under development) for ~30-60K Dockerfiles, a subset of the [Dinosaur Dataset](https://vsoch.github.io/datasets/2018/dockerfiles/).
 
 
 ## Resources

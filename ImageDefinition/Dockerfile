@@ -72,7 +72,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
     pip install spython && \
     pip install openschemas && \
     pip install schemaorg && \
-    chmod u+x entrypoint.sh && \
+    chmod u+x /code/ImageDefinition/entrypoint.sh && \
     mkdir -p /root/.docker && \
     echo {} > /root/.docker/config.json
 

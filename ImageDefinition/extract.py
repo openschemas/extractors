@@ -37,12 +37,13 @@ from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 from schemaorg.utils import read_json
 from spython.main.parse import DockerRecipe
+from schemaorg.logger import bot
 from schemaorg.utils import run_command
 import json
 import os
 
 
-def run_container_diff(container_name):
+def run_container_diff(container_name, base=None):
     '''if we dont have a container-diff result from sherlock, try running
        locally'''
     layers = dict()
@@ -51,10 +52,14 @@ def run_container_diff(container_name):
                             "--json",'--quiet','--verbosity=panic'])
     if response['return_code'] == 0:
         layers = json.loads(response['message'])
+    else:
+        if base != None:
+            bot.warning('Container name %s not found on Docker Hub, using base %s' %(container_name, base))        
+            return run_container_diff(base) 
     return layers
 
 
-def extract(dockerfile, contact, output_file=None):
+def extract(dockerfile, contact, container_name=None, output_html=True):
     '''extract a dataset from a given dockerfile, write to html output file.
        Use container-diff and spython to get information about the container.
     '''
@@ -75,24 +80,31 @@ def extract(dockerfile, contact, output_file=None):
     container_name = '/'.join(os.path.dirname(dockerfile).split('/')[-2:])
     image = Schema(spec_yml)
 
-    # dataset.properties
+    # We can obtain these from the environment, or use reasonable defaults
+    thumbnail = os.environ.get('IMAGE_THUMBNAIL', 'https://vsoch.github.io/datasets/assets/img/avocado.png')
+    about = os.environ.get('IMAGE_ABOUT', 'This is a Dockerfile parsed by the openschemas/extractors container.')
+    repository = os.environ.get('GITHUB_REPOSITORY', 'openschemas/extractors')
+    description = os.environ.get('IMAGE_DESCRIPTION', 'A Dockerfile build recipe')
+
+    # image.properties
     if len(parser.environ) > 0:
         image.properties['environment'] = parser.environ
     image.properties['entrypoint'] = parser.entrypoint
     image.properties['creator'] = person
     image.properties['version'] = image.version
-    image.properties['description'] = 'A Dockerfile build recipe'
+    image.properties['description'] = description
     image.properties['ContainerImage'] = parser.fromHeader
     image.properties['name'] = container_name
 
     # Fun properties :)
-    image.properties['thumbnailUrl'] = 'https://vsoch.github.io/datasets/assets/img/avocado.png'
+    image.properties['thumbnailUrl'] = thumbnail
     image.properties['sameAs'] = 'ImageDefinition'
-    image.properties['about'] = 'This is a Dockerfile parsed by the openschemas/extractors container.'
-    image.properties['codeRepository'] = 'https://www.github.com/openschemas/extractors'
+    image.properties['about'] = about
+    image.properties['codeRepository'] = 'https://www.github.com/%s' % repository
     image.properties['runtime'] = 'Docker'
 
-    layers = run_container_diff(container_name)
+    # Try using container name, if not available default to ContainerImage (FROM)
+    layers = run_container_diff(container_name, parser.fromHeader)
 
     if len(layers) > 0:
 
@@ -110,5 +122,7 @@ def extract(dockerfile, contact, output_file=None):
                                                     pkg['Version']))         
 
         image.properties["softwareRequirements"] = requires
-
-    return make_dataset(image, output_file)
+    
+    if output_html:
+        return make_dataset(image)
+    return image.dump_json(pretty_print=True)

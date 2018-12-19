@@ -34,22 +34,56 @@ case of a specification not served by production schema.org).
 # Usage
 There are two ways you can use the extractors here!
 
-## Dockerfile or Github Action
+## Local with Docker
 
 The [Dockerfile](Dockerfile) in the base of the repository is built and served
 on Docker Hub at [openschemas/extractors](). Specifically, it will take an input
 Dockerfile, and use container-diff and Singularity Python Client (recipe parser)
 to generate an html page embedded with json-ld, or just the json-ld, to
-store with your recipe. Here is how to generate the html output for a local
-Dockerfile (this command uses an example provided in the container)
+store with your recipe. Note that each of these commands will take about 
+30 seconds to download the layers (with container-diff) to find software
+dependencies. Here is how to generate json-ld output to the console,
+and then pipe it into a file:
 
 ```bash
-$ docker run -it openschemas/extractors extract --contact @vsoch
+# Run using the Dockerfile inside the container (json-ld to terminal)
+$ docker run -it openschemas/extractors extract --contact vsoch
+
+# Output html instead (renders into a nice web page)
+$ docker run -it openschemas/extractors extract --contact @vsoch --html
+
+# Run with your own Dockerfile
+$ docker run -v $PWD:/data -it openschemas/extractors extract --contact vsoch --filename /data/Dockerfile
+
+# Pipe into an output file
+$ docker run -v $PWD:/data -it openschemas/extractors extract --contact vsoch --filename /data/Dockerfile > metadata.json
 ```
 
-Here is how to use your own Dockerfile - you need to mount the volume.
+You can also customize some of the variables that go into the generation! We
+do this by way of environment variables. Here is how to customize the image thumbnail (a web
+address), the container description, a more detailed about, and the Github repository.
 
-**under development!**
+```bash
+$ docker run -e IMAGE_THUMBNAIL=https://vsoch.github.io/datasets/assets/img/avocado.png \
+             -e IMAGE_ABOUT="This Dockerfile was created by the avocado dinosaur." \
+             -e GITHUB_REPOSITORY="openschemas/dockerfiles" \
+             -e IMAGE_DESCRIPTION="ubuntu with golang and extra python modules installed." \
+             -it openschemas/extractors extract --contact vsoch
+```
+
+The above variables default to the following:
+
+| Variable | Default | 
+|----------|---------|
+| IMAGE_THUMBNAIL | 'https://vsoch.github.io/datasets/assets/img/avocado.png' |
+| IMAGE_ABOUT | 'This is a Dockerfile parsed by the openschemas/extractors container.' |
+| GITHUB_REPOSITORY | 'openschemas/extracors' | 
+| IMAGE_DESCRIPTION | 'A Dockerfile build recipe' |
+
+
+Note that if you are using the Github action associated with this repository, `GITHUB_REPOSITORY`
+is defined for you (more on this in the next section).
+
 
 ## Local Usage
 

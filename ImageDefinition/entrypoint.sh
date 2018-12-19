@@ -42,6 +42,7 @@ DOCKERFILE="Dockerfile"
 OUTPUT_FORMAT="json"
 CONTAINER_NAME=""
 DEPLOY="no"
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 while true; do
     case ${1:-} in
@@ -120,10 +121,10 @@ if [ "${EXTRACTION}" == "yes" ]; then
 
         # Less likely for the user to bind here
         mkdir -p /opt/build
-        python3 run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/build/index.html
+        python3 ${HERE}/run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/build/index.html
 
         # We know that GITHUB_TOKEN is in environment from check above
-        /bin/bash deploy.sh /opt/build/index.html
+        /bin/bash ${HERE}/deploy.sh /opt/build/index.html
 
     # Otherwise just do the extraction
     else

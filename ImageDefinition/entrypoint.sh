@@ -19,6 +19,9 @@ usage () {
                 --name|-n:     the name of the container for the Dockerfile
                 -f|--filepath: specify a Dockerfile path (other than Dockerfile)
                 --html         output html instead
+                --deploy       if running in a Github action, given that
+                               GITHUB_TOKEN is also defined, deploy html
+                               page with embedded json-ld back to Github Pages
 
          Examples:
 
@@ -38,6 +41,7 @@ EXTRACTION="no"
 DOCKERFILE="Dockerfile"
 OUTPUT_FORMAT="json"
 CONTAINER_NAME=""
+DEPLOY="no"
 
 while true; do
     case ${1:-} in
@@ -63,6 +67,10 @@ while true; do
             shift
             OUTPUT_FORMAT="html"
         ;;
+        --deploy)
+            shift
+            DEPLOY="yes"
+        ;;
         --name|-n)
             shift
             CONTAINER_NAME="${1:-}"
@@ -77,6 +85,11 @@ while true; do
         ;;
     esac
 done
+
+# Deploy requires GITHUB_TOKEN
+if [ -z "${GITHUB_TOKEN}" ]; then
+    DEPLOY="no"
+fi
 
 EXTRACTION_TYPE=${1:-Dataset}
 
@@ -102,8 +115,20 @@ if [ "${EXTRACTION}" == "yes" ]; then
         exit 1;
     fi
 
-    # Do the extraction
-    python3 run.py "${DOCKERFILE}" "${OUTPUT_FORMAT}" "${MAINTAINER}" "${CONTAINER_NAME}"
+    # If we are deploying, then pipe into a file
+    if [ "${DEPLOY}" == "yes" ]; then
+
+        # Less likely for the user to bind here
+        mkdir -p /opt/build
+        python3 run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/build/index.html
+
+        # We know that GITHUB_TOKEN is in environment from check above
+        /bin/bash deploy.sh /opt/build/index.html
+
+    # Otherwise just do the extraction
+    else
+        python3 run.py "${DOCKERFILE}" "${OUTPUT_FORMAT}" "${MAINTAINER}" "${CONTAINER_NAME}"
+    fi
 
 else
     echo "Please select an action (e.g., docker run <container> extract <options>)"

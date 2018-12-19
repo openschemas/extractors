@@ -1,6 +1,6 @@
 FROM golang:1.11.3-stretch
 
-# docker build -t openschemas/extractors .
+# docker build -t openschemas/extractors-imagedefinition .
 
 ################################################################################
 #

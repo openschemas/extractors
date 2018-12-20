@@ -98,7 +98,6 @@ def extract(dockerfile, contact, container_name=None, output_html=True):
 
     # Step 3: Create Dataset
     parser = DockerRecipe(dockerfile)
-    container_name = '/'.join(os.path.dirname(dockerfile).split('/')[-2:])
     image = Schema(spec_yml)
 
     # We can obtain these from the environment, or use reasonable defaults

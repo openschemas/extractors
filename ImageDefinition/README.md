@@ -70,17 +70,35 @@ workflow "Deploy ImageDefinition Schema" {
   resolves = ["Extract ImageDefinition Schema"]
 }
 
+action "build" {
+  uses = "actions/docker/cli@master"
+  args = "build -t vanessa/salad ."
+}
+
+action "list" {
+  needs = ["build"]
+  uses = "actions/bin/sh@master"
+  runs = "ls"
+  args = ["/github/workspace"]
+}
+
 action "Extract ImageDefinition Schema" {
-  uses = "openschemas/extractors/ImageDefinition@master"
+  needs = ["build", "list"]
+  uses = "docker://openschemas/extractors:ImageDefinition"
   secrets = ["GITHUB_TOKEN"]
   env = {
     IMAGE_THUMBNAIL = "https://vsoch.github.io/datasets/assets/img/avocado.png"
-    IMAGE_ABOUT = "This image smells like parsnips and Santa's socks."
-    IMAGE_DESCRIPTION = "ubuntu base with GoLang and custom Python modules"
+    IMAGE_ABOUT = "Generate ascii art for a fork or spoon, along with a pun."
+    IMAGE_DESCRIPTION = "alpine base with GoLang and PUNS."
   }
-  args = ["extract", "--contact", "@vsoch", '--deploy']
+  args = ["extract", "--name", "vanessa/salad", "--contact", "@vsoch", "--filename", "/github/workspace/Dockerfile", "--deploy"]
 }
 ```
+
+ 1. In the first block, we define the workflow, and say that it resolves with the last step.
+ 2. In the second block, we build our container from the Dockerfile at the root.
+ 3. In the third block, this is for debugging. You don't really need it, but it's a sanity check to list the workspace content.
+ 4. In the final block, we need to set environment variables that we want to change, and then run the container. Notice that I've changed the `--name` to be the container that we just build in the second step (vanessa/salar) and the `--contact` is also my name. The `--filename` needs to point to the Dockerfile in the Github workspace. The `--deploy` command will upload it to Github pages.
 
 Note that we are using the same Docker container as above, but providing the 
 entrypoint.sh a `GITHUB_TOKEN` via a secret (it's provided by Github),
@@ -100,7 +118,8 @@ variables:
 | GITHUB_ACTOR | Your Github username (provided by Github, you don't need to set) |
 | GITHUB_REPO | The repository (again, provided by Github) |
 
-Full (tested and working) example coming soon!
+Here is an example deployment in action! [vsoch/salad](https://github.com/vsoch/salad).
+Specifically, see the [Github pages](https://vsoch.github.io/salad/).
 
 ## Development
 

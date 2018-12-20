@@ -73,6 +73,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
     pip install openschemas && \
     pip install schemaorg && \
     chmod u+x /code/ImageDefinition/entrypoint.sh && \
+    chmod u+x /code/ImageDefinition/deploy.sh && \
     mkdir -p /root/.docker && \
     echo {} > /root/.docker/config.json
 

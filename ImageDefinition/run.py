@@ -16,9 +16,8 @@ container_name = sys.argv[4]
 
 output_format = output_format.lower()
 
-# These extractors are used across a subset
-
-from ImageDefinition.extract import extract
+# Import extract function
+from extract import extract
 
 # Don't define an output html, the user can pipe to one if desired
 result = extract(dockerfile, contact_name, container_name, output_format == "html")

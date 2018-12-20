@@ -17,7 +17,7 @@ usage () {
 
                 --contact | -c the name to add as the maintainer / contact
                 --name|-n:     the name of the container for the Dockerfile
-                -f|--filepath: specify a Dockerfile path (other than Dockerfile)
+                -f|--filename: specify a Dockerfile path (other than Dockerfile)
                 --html         output html instead
                 --deploy       if running in a Github action, given that
                                GITHUB_TOKEN is also defined, deploy html
@@ -101,6 +101,11 @@ fi
 
 if [ "${EXTRACTION}" == "yes" ]; then
 
+    echo "Preparing to do extraction."
+    echo "Dockerfile: ${DOCKERFILE}"
+    echo "Container Name: ${CONTAINER_NAME}"
+    echo "Output Format: ${OUTPUT_FORMAT}"
+
     # Does the Dockerfile exist?
     if [ ! -f "${DOCKERFILE}" ]; then
         echo "${DOCKERFILE} does not exist.";
@@ -110,12 +115,11 @@ if [ "${EXTRACTION}" == "yes" ]; then
     # If we are deploying, then pipe into a file
     if [ "${DEPLOY}" == "yes" ]; then
 
-        # Less likely for the user to bind here
-        mkdir -p /opt/build
-        python3 ${HERE}/run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/build/index.html
+        # Write the index file
+        python3 ${HERE}/run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/index.html
 
         # We know that GITHUB_TOKEN is in environment from check above
-        /bin/bash ${HERE}/deploy.sh /opt/build/index.html
+        /bin/bash ${HERE}/deploy.sh /opt/index.html
 
     # Otherwise just do the extraction
     else

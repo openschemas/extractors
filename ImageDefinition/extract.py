@@ -40,23 +40,45 @@ from spython.main.parse import DockerRecipe
 from schemaorg.logger import bot
 from schemaorg.utils import run_command
 import json
+import tempfile
 import os
 
 
-def run_container_diff(container_name, base=None):
+def run_container_diff(container_name, base=None, output_file=None):
     '''if we dont have a container-diff result from sherlock, try running
        locally'''
     layers = dict()
     response = run_command(["container-diff", "analyze", container_name,
                             "--type=pip", "--type=apt", "--type=history",
-                            "--json",'--quiet','--verbosity=panic'])
-    if response['return_code'] == 0:
-        layers = json.loads(response['message'])
+                            "--output", output_file, "--json",
+                            "--quiet","--verbosity=panic"])
+    if response['return_code'] == 0 and os.path.exists(output_file):
+        layers = read_json(output_file)
     else:
         if base != None:
             bot.warning('Container name %s not found on Docker Hub, using base %s' %(container_name, base))        
-            return run_container_diff(base) 
+            return run_container_diff(container_name = base, 
+                                      output_file=output_file) 
     return layers
+
+
+def get_tmpfile(prefix="", ext=""):
+    '''get a temporary file with an optional prefix. By default will be
+       created in /tmp By default, the file is closed (and just a name returned).
+
+       Parameters
+       ==========
+       requested_tmpdir: an optional requested temporary directory, first
+       priority as is coming from calling function.
+       prefix: prefix the file with this string.
+    '''
+
+    # First priority for the base goes to the user requested.
+    tmpdir = tempfile.mkdtemp()
+    prefix = os.path.join(tmpdir, os.path.basename(prefix))
+    fd, tmp_file = tempfile.mkstemp(prefix=prefix) 
+    os.close(fd)
+    return tmp_file
 
 
 def extract(dockerfile, contact, container_name=None, output_html=True):
@@ -103,8 +125,11 @@ def extract(dockerfile, contact, container_name=None, output_html=True):
     image.properties['codeRepository'] = 'https://www.github.com/%s' % repository
     image.properties['runtime'] = 'Docker'
 
+    # Generate temporary filename
+    output_file = "%s.json" % get_tmpfile("image-definition")
+
     # Try using container name, if not available default to ContainerImage (FROM)
-    layers = run_container_diff(container_name, parser.fromHeader)
+    layers = run_container_diff(container_name, parser.fromHeader, output_file)
 
     if len(layers) > 0:
 

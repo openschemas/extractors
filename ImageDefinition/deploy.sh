@@ -13,9 +13,7 @@ if [ ! -f "${DEPLOY_FILE}" ]; then
     exit 1;
 fi
 
-# Copy the deploy file to $PWD
-cp ${DEPLOY_FILE} ${PWD}
-DEPLOY_FILE=$(basename "${DEPLOY_FILE}")
+echo "Deploy File is ${DEPLOY_FILE}"
 
 # Set up variables for remote repository and branch
 REMOTE_REPO="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
@@ -25,9 +23,16 @@ REMOTE_BRANCH="gh-pages"
 git init && \
     git config user.name "${GITHUB_ACTOR}" && \
     git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" && \
-    git add "${DEPLOY_FILE}" && \
-    git commit -m 'action deploy' > /dev/null 2>&1 && \
-    git push --force "${REMOTE_REPO}" master:${REMOTE_BRANCH} > /dev/null 2>&1 && \
-    rm -fr .git && \
-    cd ../ && \
+
+    # Checkout orphan branch, we remove all because can't add main.workflow
+    git checkout gh-pages || git checkout --orphan gh-pages
+    git rm -rf .
+
+    # Add the deploy file to the PWD, an empty github pages
+    cp ${DEPLOY_FILE} .
+    git add $(basename "${DEPLOY_FILE}");
+
+    # Push to Github pages
+    git commit -m 'Automated deployment to Github Pages: Action deploy' --allow-empty && \
+    git push origin gh-pages && \
     echo "Successful deploy."

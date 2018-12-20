@@ -93,10 +93,7 @@ def extract(dockerfile, contact, container_name=None, output_html=True):
     # Step 1: Show required and recommended fields from recipe
     recipe = RecipeParser(recipe_yml)
     
-    # Step 2: Generate a Person (these are Google Helper functions)
-    person = make_person(name=contact, description='Dockerfile maintainer')
-
-    # Step 3: Create Dataset
+    # Step 2: Create Dataset
     parser = DockerRecipe(dockerfile)
     image = Schema(spec_yml)
 
@@ -106,11 +103,30 @@ def extract(dockerfile, contact, container_name=None, output_html=True):
     repository = os.environ.get('GITHUB_REPOSITORY', 'openschemas/extractors')
     description = os.environ.get('IMAGE_DESCRIPTION', 'A Dockerfile build recipe')
 
+    # Step 3: Generate a Person (these are Google Helper functions)
+    contact = os.environ.get('GITHUB_ACTOR', contact)
+    contact_url = os.environ.get('CONTACT_URL', repository)
+    contact_description = os.environ.get('CONTACT_DESCRIPTION', 'Dockerfile maintainer')    
+    contact_type = os.environ.get('CONTACT_TYPE', 'customer support')
+    contact_telephone = os.environ.get('CONTACT_TELEPHONE')
+
+    # Get the repository full url for contact
+    if not contact_url.startswith('http'): 
+        contact_url = "https://www.github.com/%s" % contact_url
+       
+    if contact is not None:
+        person = make_person(name=contact, 
+                             description=contact_description,
+                             url=contact_url,
+                             contact_type=contact_type,
+                             telephone = contact_telephone)
+        image.properties['creator'] = person
+        image.properties['author'] = person
+        
     # image.properties
     if len(parser.environ) > 0:
         image.properties['environment'] = parser.environ
     image.properties['entrypoint'] = parser.entrypoint
-    image.properties['creator'] = person
     image.properties['version'] = image.version
     image.properties['description'] = description
     image.properties['ContainerImage'] = parser.fromHeader

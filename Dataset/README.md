@@ -41,7 +41,7 @@ $ docker run -e DATASET_THUMBNAIL=https://vsoch.github.io/datasets/assets/img/av
              -e GITHUB_REPOSITORY="openschemas/dockerfiles" \
              -e DATASET_DESCRIPTION="ubuntu with golang and extra python modules installed." \
              -e DATASET_KWARGS="{'encoding' : 'utf-8', 'author' : 'Dinosaur'}" \
-             -it openschemas/extractors:Dataset extract --contact vsoch
+             -it openschemas/extractors:Dataset extract --name "Dinosaur Dataset" --contact vsoch --version "1.0.0"
 ```
 
 The above variables default to the following:

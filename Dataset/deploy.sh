@@ -13,6 +13,15 @@ if [ ! -f "${DEPLOY_FILE}" ]; then
     exit 1;
 fi
 
+# Only deploy on change to master (or used specified branch)
+GITHUB_BRANCH="${GITHUB_BRANCH:-refs/heads/master}"
+
+# Is the branch the user specified the one we are on?
+if [ "${GITHUB_BRANCH}" != "${GITHUB_REF}" ]; then
+    echo "${GITHUB_BRANCH} != ${GITHUB_REF}, skipping deploy"
+    exit 0;
+fi
+
 echo "Deploy File is ${DEPLOY_FILE}"
 
 # Set up variables for remote repository and branch
@@ -26,6 +35,7 @@ git init && \
 
     # Checkout orphan branch, we remove all because can't add main.workflow
     git checkout gh-pages || git checkout --orphan gh-pages
+    git pull origin gh-pages
     git rm -rf .
 
     # Add the deploy file to the PWD, an empty github pages

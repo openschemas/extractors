@@ -13,7 +13,13 @@ software and other entities described in [schema.org](https://www.schema.org).
 The following specifications have Dockerfiles (and associated Github actions)
 for you to use! See the subdirectories to get usage:
 
+ - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [ImageDefinition](ImageDefinition) is a kind of SoftwareSourceCode extended to describe containers. We provide a Dockerfile that builds the extractor to generate a static page for an input Dockerfile.
+
+For both of the above, when you deploy to Github pages for the first time, you
+need to switch Github Pages to deploy from master and then back to the `gh-pages`
+branch on deploy. There is a known issue with Permissions if you deploy
+to the brain without activating it (as an admin) from the respository first.
 
 ## Extractors (without Containers)
 
@@ -21,7 +27,6 @@ The following examples for entities (children of "Thing")
 defined in schema.org are also provided. These specifications don't yet have Docker
 containers or Github Action extractors.
 
- - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [DataCatalog](DataCatalog): a collection or grouping of Datasets
  - [Organization](Organization): a complete organization, with a ContactPoint
  - [SoftwareSourceCode](SoftwareSourceCode) an example extraction shown [here](https://openbases.github.io/extract-dockerfile/SoftwareSourceCode/) for a Dockerfile.

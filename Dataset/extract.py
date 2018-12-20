@@ -65,16 +65,31 @@ def extract(name, version=None, contact=None, output_html=True,
     # Step 2: Create Dataset
     dataset = Schema("Dataset")
 
-    # Step 3: Generate a Person (these are Google Helper functions)
-    if contact is not None:
-        person = make_person(name=contact, description='Dataset maintainer')
-        dataset.add_property('creator', person)
-
     # We can obtain these from the environment, or use reasonable defaults
     thumbnail = os.environ.get('DATASET_THUMBNAIL', thumbnail or 'https://vsoch.github.io/datasets/assets/img/avocado.png')
     about = os.environ.get('DATASET_ABOUT', about or 'This is a Dataset parsed by the openschemas/extractors container.')
     repository = os.environ.get('GITHUB_REPOSITORY', repository or 'openschemas/extractors')
     description = os.environ.get('DATASET_DESCRIPTION', 'A Dataset')
+    email = os.environ.get('DATASET_EMAIL', )
+
+    # Contact metadata
+    contact = os.environ.get('GITHUB_ACTOR', contact)
+    contact_url = os.environ.get('CONTACT_URL', repository)
+    contact_description = os.environ.get('CONTACT_DESCRIPTION', 'Dataset maintainer')    
+    contact_type = os.environ.get('CONTACT_TYPE', 'customer support')
+    contact_telephone = os.environ.get('CONTACT_TELEPHONE')
+
+    # Get the repository full url for contact
+    if not contact_url.startswith('http'): 
+        contact_url = "https://www.github.com/%s" % contact_url
+       
+    if contact is not None:
+        person = make_person(name=contact, 
+                             description=contact_description,
+                             url=contact_url,
+                             contact_type=contact_type,
+                             telephone = contact_telephone)
+        dataset.add_property('creator', person)
 
     # dataset.properties
     dataset.add_property('version', version)

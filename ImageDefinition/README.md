@@ -119,8 +119,15 @@ variables:
 | GITHUB_ACTOR | Your Github username (provided by Github, you don't need to set) |
 | GITHUB_REPO | The repository (again, provided by Github) |
 
+When you deploy to Github pages for the first time, you
+need to switch Github Pages to deploy from master and then back to the `gh-pages`
+branch on deploy. There is a known issue with Permissions if you deploy
+to the brain without activating it (as an admin) from the respository first.
+
 Here is an example deployment in action! [vsoch/salad](https://github.com/vsoch/salad).
-Specifically, see the [Github pages](https://vsoch.github.io/salad/).
+Specifically, see the [Github pages](https://vsoch.github.io/salad/). Note
+that because we don't have any apt or pip packages, the softwareDependencies
+is an empty list.
 
 ## Development
 

@@ -117,6 +117,7 @@ if [ "${EXTRACTION}" == "yes" ]; then
 
         # Write the index file
         python3 ${HERE}/run.py "${DOCKERFILE}" "html" "${MAINTAINER}" "${CONTAINER_NAME}" > /opt/index.html
+        cat /opt/index.html
 
         # We know that GITHUB_TOKEN is in environment from check above
         /bin/bash ${HERE}/deploy.sh /opt/index.html

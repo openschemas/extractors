@@ -75,7 +75,7 @@ action "list" {
   args = ["/github/workspace"]
 }
 
-action "Extract ImageDefinition Schema" {
+action "Extract Dataset Schema" {
   needs = ["list"]
   uses = "docker://openschemas/extractors:Dataset"
   secrets = ["GITHUB_TOKEN"]
@@ -92,17 +92,29 @@ action "Extract ImageDefinition Schema" {
  3. In the second block, this is for debugging. You don't really need it, but it's a sanity check to list the workspace content.
  4. In the final block, we need to set environment variables that we want to change, and then run the container. The `--name` is the name of my Dataset. The `--contact` is also my name. The `--version` is the version for the dataset. The `--deploy` command will upload it to Github pages.
 
-In summary, we have the following variables:
+In summary, we have the following variables. Those that start with `CONTACT_` are
+intended to describe the dataset maintainer (or contact) and those with `DATASET_`
+describe the dataset, and `GITHUB_` is primarily Github Actions environment
+variables.
 
 | Variable | Default | 
 |----------|---------|
 | GITHUB_TOKEN | provided by Github in environemnt as secret |
-| DATASET_THUMBNAIL | 'https://vsoch.github.io/datasets/assets/img/avocado.png' |
-| DATASET_ABOUT | 'This is a Dockerfile parsed by the openschemas/extractors container.' |
 | GITHUB_REPOSITORY | 'openschemas/extracors' (also provided by Github) | 
-| DATASET_DESCRIPTION | 'A Dockerfile build recipe' |
 | GITHUB_ACTOR | Your Github username (provided by Github, you don't need to set) |
 | GITHUB_REPO | The repository (again, provided by Github) |
+| DATASET_THUMBNAIL | 'https://vsoch.github.io/datasets/assets/img/avocado.png' |
+| DATASET_ABOUT | 'This is a Dockerfile parsed by the openschemas/extractors container.' |
+| DATASET_DESCRIPTION | 'A Dockerfile build recipe' |
+| CONTACT_URL | A contact URL for the Dataset. Defaults to Github repo |
+| CONTACT_TYPE | defaults to customer support. Be careful changing this, Google Datasets only accepts valid types |
+| CONTACT_TELEPHONE | default is unset. The contact telephone number |
+| CONTACT_DESCRIPTION | defaults to Dataset maintainer |
+
+When you deploy to Github pages for the first time, you
+need to switch Github Pages to deploy from master and then back to the `gh-pages`
+branch on deploy. There is a known issue with Permissions if you deploy
+to the brain without activating it (as an admin) from the respository first.
 
 ## Development
 

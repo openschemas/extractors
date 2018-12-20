@@ -62,15 +62,14 @@ def run_container_diff(container_name, base=None, output_file=None):
     return layers
 
 
-def get_tmpfile(prefix="", ext=""):
+def get_tmpfile(prefix=""):
     '''get a temporary file with an optional prefix. By default will be
        created in /tmp By default, the file is closed (and just a name returned).
 
        Parameters
        ==========
-       requested_tmpdir: an optional requested temporary directory, first
-       priority as is coming from calling function.
        prefix: prefix the file with this string.
+
     '''
 
     # First priority for the base goes to the user requested.

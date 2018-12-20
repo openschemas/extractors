@@ -8,7 +8,8 @@ There are two ways you can use the extractors here!
 ## Local with Docker
 
 The [Dockerfile](Dockerfile) is built and served on Docker Hub at 
-[openschemas/extractors:ImageDefinition](). Specifically, it will take an input
+[openschemas/extractors:ImageDefinition](https://cloud.docker.com/u/openschemas/repository/docker/openschemas/extractors). 
+Specifically, it will take an input
 Dockerfile, and use container-diff and Singularity Python Client (recipe parser)
 to generate an html page embedded with json-ld, or just the json-ld, to
 store with your recipe. Here is how to generate json-ld output to the console,
@@ -42,7 +43,7 @@ $ docker run -e IMAGE_THUMBNAIL=https://vsoch.github.io/datasets/assets/img/avoc
              -e IMAGE_ABOUT="This Dockerfile was created by the avocado dinosaur." \
              -e GITHUB_REPOSITORY="openschemas/dockerfiles" \
              -e IMAGE_DESCRIPTION="ubuntu with golang and extra python modules installed." \
-             -it openschemas/extractors extract --contact vsoch
+             -it openschemas/extractors:ImageDefinition extract --contact vsoch
 ```
 
 The above variables default to the following:

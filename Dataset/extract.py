@@ -13,17 +13,35 @@ November 11, 2018
 
 '''
 
-from schemaorg.templates.google import make_dataset
+from schemaorg.templates.google import ( make_dataset, make_person )
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
+import ast
 import os
+import tempfile
+
+def get_tmpfile(prefix=""):
+    '''get a temporary file with an optional prefix. By default will be
+       created in /tmp By default, the file is closed (and just a name returned).
+
+       Parameters
+       ==========
+       prefix: prefix the filename with this string.
+    '''
+
+    # First priority for the base goes to the user requested.
+    tmpdir = tempfile.mkdtemp()
+    prefix = os.path.join(tmpdir, os.path.basename(prefix))
+    fd, tmp_file = tempfile.mkstemp(prefix=prefix) 
+    os.close(fd)
+    return tmp_file
 
 
-def extract(name, description, version, thumbnail, sameAs, 
-            about=None, output_file=None, person=None, catalog=None,
-            **kwargs):
+def extract(name, version=None, contact=None, output_html=True,
+            output_file=None, description=None, thumbnail=None, sameAs=None, 
+            about=None, repository=None):
 
-    ''' extract a DataCatalog to describe some dataset(s). To add more
+    ''' extract a Dataset to describe some Github repository. To add more
         properties, just add them via additional keyword args (kwargs)
     
         Parameters
@@ -31,6 +49,7 @@ def extract(name, description, version, thumbnail, sameAs,
         output_file: An html output file to write catalog to (optional)
         url: the url to get the catalog
         name: the name of the DataCatalog
+        contact: name of a person that is in charge of the dataset
         description: a description of the DataCatalog
         thumbnail: an image thumbnail (web url)
         about: text about the data catalog (optional).
@@ -46,26 +65,37 @@ def extract(name, description, version, thumbnail, sameAs,
     # Step 2: Create Dataset
     dataset = Schema("Dataset")
 
+    # Step 3: Generate a Person (these are Google Helper functions)
+    if contact is not None:
+        person = make_person(name=contact, description='Dataset maintainer')
+        dataset.add_property('creator', person)
+
+    # We can obtain these from the environment, or use reasonable defaults
+    thumbnail = os.environ.get('DATASET_THUMBNAIL', thumbnail or 'https://vsoch.github.io/datasets/assets/img/avocado.png')
+    about = os.environ.get('DATASET_ABOUT', about or 'This is a Dataset parsed by the openschemas/extractors container.')
+    repository = os.environ.get('GITHUB_REPOSITORY', repository or 'openschemas/extractors')
+    description = os.environ.get('DATASET_DESCRIPTION', 'A Dataset')
+
     # dataset.properties
-    dataset.add_property('creator', person)
     dataset.add_property('version', version)
     dataset.add_property('description', description)
     dataset.add_property('name', name)
     dataset.add_property('thumbnailUrl', thumbnail)
-    dataset.add_property('sameAs', sameAs)
     dataset.add_property('about', about)
 
-    # Step 3: Additional (won't be added if not part of schema)
-    for key,value in kwargs.items():
-        dataset.add_property(key, value)
+    # Step 4: Additional (won't be added if not part of schema)
+    DATASET_KWARGS=os.environ.get('DATASET_KWARGS') 
+    if DATASET_KWARGS is not None:
+        DATASET_KWARGS=ast.literal_eval(DATASET_KWARGS)
+        for key,value in DATASET_KWARGS.items():
+            dataset.add_property(key, value)
 
-    # Add dataCatalog
-    dataset.add_property('includedInDataCatalog', catalog)
-
-    # Step 4: Validate Data Structure
+    # Step 5: Validate Data Structure
     recipe.validate(dataset)
 
-    # Step 5: Optionally output to file
-    if output_file is not None:
-        make_dataset(dataset, output_file)
-    return dataset
+    # Generate temporary filename
+    output_file = "%s.json" % get_tmpfile("dataset")
+    
+    if output_html:
+        return make_dataset(dataset)
+    return dataset.dump_json(pretty_print=True)

@@ -15,6 +15,7 @@ for you to use! See the subdirectories to get usage:
 
  - [Dataset](Dataset) is an example starter script to extract a Dataset.
  - [ImageDefinition](ImageDefinition) is a kind of SoftwareSourceCode extended to describe containers. We provide a Dockerfile that builds the extractor to generate a static page for an input Dockerfile.
+ - [ContainerTree](ContainerTree) is an extended ImageDefinition to also include a filesystem listing that can be used to generate a container tree.
 
 For both of the above, when you deploy to Github pages for the first time, you
 need to switch Github Pages to deploy from master and then back to the `gh-pages`

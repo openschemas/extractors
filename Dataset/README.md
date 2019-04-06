@@ -38,6 +38,7 @@ a Dataset with `DATASET_KWARGS`.
 ```bash
 $ docker run -e DATASET_THUMBNAIL=https://vsoch.github.io/datasets/assets/img/avocado.png \
              -e DATASET_ABOUT="This Dockerfile was created by the avocado dinosaur." \
+             -e DATASET_TEMPLATE="google/dataset-table.html" \
              -e GITHUB_REPOSITORY="openschemas/dockerfiles" \
              -e DATASET_DESCRIPTION="ubuntu with golang and extra python modules installed." \
              -e DATASET_KWARGS="{'encoding' : 'utf-8', 'author' : 'Dinosaur'}" \
@@ -52,8 +53,17 @@ The above variables default to the following:
 | DATASET_ABOUT | 'This is a Dataset parsed by the openschemas/extractors container.' |
 | GITHUB_REPOSITORY | 'openschemas/extracors' | 
 | DATASET_DESCRIPTION | 'A Dataset' |
+| DATASET_TEMPLATE | 'google/dataset-table.html'|
 | DATASET_KWARGS | unset |
 
+What is the `DATASET_TEMPLATE`? This is the template used to render the page. The choices are:
+
+  - google/dataset-table.html  (bootstrap)
+  - google/visual-dataset.html (see vsoch.github.io/zenodo-ml)
+  - google/dataset.html        (just blank page, json metadata)
+  - google/dataset-vue-table.html
+
+You can see previews of each [here](https://openschemas.github.io/schemaorg#7-embed-in-html-with-json-ld)
 Note that if you are using the Github action associated with this repository, `GITHUB_REPOSITORY`
 is defined for you (more on this in the next section).
 
@@ -83,6 +93,7 @@ action "Extract Dataset Schema" {
     DATASET_THUMBNAIL = "https://vsoch.github.io/datasets/assets/img/avocado.png"
     DATASET_ABOUT = "Lots and lots of data."
     DATASET_DESCRIPTION = "The best dataset"
+    DATASET_TEMPLATE = 'google/dataset-vue-table.html'
   }
   args = ["extract", "--name", "MyDataset", "--contact", "@vsoch", "--version", "1.0.0", "--deploy"]
 }
@@ -106,6 +117,7 @@ variables.
 | DATASET_THUMBNAIL | 'https://vsoch.github.io/datasets/assets/img/avocado.png' |
 | DATASET_ABOUT | 'This is a Dockerfile parsed by the openschemas/extractors container.' |
 | DATASET_DESCRIPTION | 'A Dockerfile build recipe' |
+| DATASET_TEMPLATE | 'google/dataset-table.html'|
 | CONTACT_URL | A contact URL for the Dataset. Defaults to Github repo |
 | CONTACT_TYPE | defaults to customer support. Be careful changing this, Google Datasets only accepts valid types |
 | CONTACT_TELEPHONE | default is unset. The contact telephone number |

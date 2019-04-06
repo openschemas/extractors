@@ -15,7 +15,6 @@ November 11, 2018
 
 from schemaorg.templates.google import ( 
     make_dataset, 
-    make_table, 
     make_person
 )
 from schemaorg.main.parse import RecipeParser

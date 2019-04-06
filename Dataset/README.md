@@ -45,6 +45,7 @@ $ docker run -e DATASET_THUMBNAIL=https://vsoch.github.io/datasets/assets/img/av
              -it openschemas/extractors:Dataset extract --name "Dinosaur Dataset" --contact vsoch --version "1.0.0"
 ```
 
+For the full list of variables, see the table at the bottom of the page.
 The above variables default to the following:
 
 | Variable | Default | 
@@ -106,7 +107,8 @@ action "Extract Dataset Schema" {
 In summary, we have the following variables. Those that start with `CONTACT_` are
 intended to describe the dataset maintainer (or contact) and those with `DATASET_`
 describe the dataset, and `GITHUB_` is primarily Github Actions environment
-variables.
+variables. `DATASET_DOWNLOAD` describes the `DataDownload` attribute. Whatever extra
+arguments you want added for any scheme.org type, add them to `<PREFIX>_KWARGS`
 
 | Variable | Default | 
 |----------|---------|
@@ -114,14 +116,22 @@ variables.
 | GITHUB_REPOSITORY | 'openschemas/extracors' (also provided by Github) | 
 | GITHUB_ACTOR | Your Github username (provided by Github, you don't need to set) |
 | GITHUB_REPO | The repository (again, provided by Github) |
+|----------|---------|
 | DATASET_THUMBNAIL | 'https://vsoch.github.io/datasets/assets/img/avocado.png' |
 | DATASET_ABOUT | 'This is a Dockerfile parsed by the openschemas/extractors container.' |
 | DATASET_DESCRIPTION | 'A Dockerfile build recipe' |
 | DATASET_TEMPLATE | 'google/dataset-table.html'|
+| DATASET_KWARGS | dictionary of additional key:value pairs to add to Dataset|
+|------------------|----------------------------|
+| DATASET_DOWNLOAD_LINK | A direct URL to download the data. You must also include `DATASET_ENCODING_FORMAT` |
+| DATASET_DOWNLOAD_ENCODING | the encoding format of the download data, typically a mime type |
+| DATASET_DOWNLOAD_KWARGS | dictionary of additional key:value pairs to add to DataDownload|
+|----------|---------|
 | CONTACT_URL | A contact URL for the Dataset. Defaults to Github repo |
 | CONTACT_TYPE | defaults to customer support. Be careful changing this, Google Datasets only accepts valid types |
 | CONTACT_TELEPHONE | default is unset. The contact telephone number |
 | CONTACT_DESCRIPTION | defaults to Dataset maintainer |
+| CONTACT_KWARGS | dictionary of additional key:value pairs to add to contact (Person).|
 
 When you deploy to Github pages for the first time, you
 need to switch Github Pages to deploy from master and then back to the `gh-pages`

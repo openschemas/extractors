@@ -23,25 +23,9 @@ import ast
 import os
 import tempfile
 
-def get_tmpfile(prefix=""):
-    '''get a temporary file with an optional prefix. By default will be
-       created in /tmp By default, the file is closed (and just a name returned).
-
-       Parameters
-       ==========
-       prefix: prefix the filename with this string.
-    '''
-
-    # First priority for the base goes to the user requested.
-    tmpdir = tempfile.mkdtemp()
-    prefix = os.path.join(tmpdir, os.path.basename(prefix))
-    fd, tmp_file = tempfile.mkstemp(prefix=prefix) 
-    os.close(fd)
-    return tmp_file
-
 
 def extract(name, version=None, contact=None, output_html=True,
-            output_file=None, description=None, thumbnail=None, sameAs=None, 
+            description=None, thumbnail=None, sameAs=None, 
             about=None, repository=None):
 
     ''' extract a Dataset to describe some Github repository. To add more
@@ -49,7 +33,6 @@ def extract(name, version=None, contact=None, output_html=True,
     
         Parameters
         ==========
-        output_file: An html output file to write catalog to (optional)
         url: the url to get the catalog
         name: the name of the DataCatalog
         contact: name of a person that is in charge of the dataset
@@ -89,6 +72,17 @@ def extract(name, version=None, contact=None, output_html=True,
     contact_description = os.environ.get('CONTACT_DESCRIPTION', 'Dataset maintainer')    
     contact_type = os.environ.get('CONTACT_TYPE', 'customer support')
     contact_telephone = os.environ.get('CONTACT_TELEPHONE')
+    contact = add_kwargs(contact, 'DATASET_DOWNLOAD_KWARGS')
+
+    # Download Link
+    download_link = os.environ.get('DATASET_DOWNLOAD_LINK')
+    encoding = os.environ.get('DATASET_ENCODING_FORMAT')
+    if download != None:
+        download = Schema('DataDownload')
+        download.add_property('encodingFormat', encoding)
+        download.add_property('contentUrl', download_link)
+        download = add_kwargs(download, 'DATASET_DOWNLOAD_KWARGS')
+        dataset.add_property('distribution', [download])
 
     # Get the repository full url for contact
     if not contact_url.startswith('http'): 
@@ -100,6 +94,7 @@ def extract(name, version=None, contact=None, output_html=True,
                              url=contact_url,
                              contact_type=contact_type,
                              telephone = contact_telephone)
+        person = add_kwargs(person, 'CONTACT_KWARGS')
         dataset.add_property('creator', person)
 
     # dataset.properties
@@ -108,20 +103,21 @@ def extract(name, version=None, contact=None, output_html=True,
     dataset.add_property('name', name)
     dataset.add_property('thumbnailUrl', thumbnail)
     dataset.add_property('about', about)
-
-    # Step 4: Additional (won't be added if not part of schema)
-    DATASET_KWARGS=os.environ.get('DATASET_KWARGS') 
-    if DATASET_KWARGS is not None:
-        DATASET_KWARGS=ast.literal_eval(DATASET_KWARGS)
-        for key,value in DATASET_KWARGS.items():
-            dataset.add_property(key, value)
+    dataset = add_kwargs(dataset, 'DATASET_KWARGS')
 
     # Step 5: Validate Data Structure
     recipe.validate(dataset)
-
-    # Generate temporary filename
-    output_file = "%s.json" % get_tmpfile("dataset-")
     
     if output_html:
         return make_dataset(dataset, template=template)
     return dataset.dump_json(pretty_print=True)
+
+def add_kwargs(schema, envar):
+    '''add key word argumets from the environment to a schema object.
+    '''
+    KWARGS = os.environ.get(envar) 
+    if KWARGS is not None:
+        KWARGS = ast.literal_eval(KWARGS)
+        for key,value in KWARGS.items():
+            schema.add_property(key, value)
+    return schema

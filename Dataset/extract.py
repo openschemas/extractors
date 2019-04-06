@@ -13,7 +13,10 @@ November 11, 2018
 
 '''
 
-from schemaorg.templates.google import ( make_dataset, make_person )
+from schemaorg.templates.google import ( 
+    make_dataset, 
+    make_person
+)
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 import ast
@@ -70,7 +73,15 @@ def extract(name, version=None, contact=None, output_html=True,
     about = os.environ.get('DATASET_ABOUT', about or 'This is a Dataset parsed by the openschemas/extractors container.')
     repository = os.environ.get('GITHUB_REPOSITORY', repository or 'openschemas/extractors')
     description = os.environ.get('DATASET_DESCRIPTION', 'A Dataset')
-    email = os.environ.get('DATASET_EMAIL', )
+    email = os.environ.get('DATASET_EMAIL')
+    template = os.environ.get('DATASET_TEMPLATE', "google/dataset-table.html")
+
+    # Can be one of:
+    # google/dataset-table.html  (bootstrap)
+    # google/visual-dataset.html (see vsoch.github.io/zenodo-ml)
+    # google/dataset.html        (just blank page, json metadata)
+    # google/dataset-vue-table.html
+    # see https://openschemas.github.io/schemaorg#7-embed-in-html-with-json-ld
 
     # Contact metadata
     contact = os.environ.get('GITHUB_ACTOR', contact)
@@ -109,8 +120,8 @@ def extract(name, version=None, contact=None, output_html=True,
     recipe.validate(dataset)
 
     # Generate temporary filename
-    output_file = "%s.json" % get_tmpfile("dataset")
+    output_file = "%s.json" % get_tmpfile("dataset-")
     
     if output_html:
-        return make_dataset(dataset)
+        return make_dataset(dataset, template=template)
     return dataset.dump_json(pretty_print=True)
